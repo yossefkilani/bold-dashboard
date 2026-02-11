@@ -1,0 +1,573 @@
+/* ======================
+   FONTS
+====================== */
+@font-face {
+  font-family: "Gotham";
+  src: url("/fonts/gotham/Gotham-Book.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Gotham";
+  src: url("/fonts/gotham/Gotham-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+/* ======================
+   RTL + ARABIC MODE (FINAL CLEAN)
+====================== */
+
+html.lang-ar {
+  direction: rtl;
+}
+
+html.lang-ar body {
+  text-align: right;
+}
+
+/* Arabic Font */
+html.lang-ar body,
+html.lang-ar h1,
+html.lang-ar h2,
+html.lang-ar h3,
+html.lang-ar h4,
+html.lang-ar h5,
+html.lang-ar h6,
+html.lang-ar p,
+html.lang-ar span,
+html.lang-ar label,
+html.lang-ar button,
+html.lang-ar input,
+html.lang-ar textarea {
+  font-family: "IBM Plex Sans Arabic", sans-serif !important;
+}
+
+/* Top Bar */
+html.lang-ar .form-topbar {
+  flex-direction: row-reverse;
+}
+
+/* Inputs */
+html.lang-ar input,
+html.lang-ar textarea {
+  text-align: right;
+}
+
+/* ======================
+   LINKS ROW
+====================== */
+
+html.lang-ar .brief-input-row {
+  flex-direction: row-reverse;
+}
+
+html.lang-ar .brief-input-row .icon-btn {
+  order: -1; /* يجبر + يكون يسار */
+}
+
+/* ======================
+   UPLOAD ROW
+====================== */
+
+html.lang-ar .brief-field-head {
+  flex-direction: row-reverse;
+}
+
+html.lang-ar .brief-field-head .icon-btn {
+  order: -1; /* يجبر + يكون يسار */
+}
+
+/* Lists */
+html.lang-ar .links-list,
+html.lang-ar .file-list {
+  direction: rtl;
+}
+
+html.lang-ar .links-list .file-item {
+  text-align: right;
+}
+/* ======================
+   BRIEF TYPOGRAPHY RESET
+====================== */
+
+.brief-container h1,
+.brief-container h2,
+.brief-container h3,
+.brief-container h4,
+.brief-container h5,
+.brief-container h6,
+.brief-container p,
+.brief-container span,
+.brief-container label,
+.brief-container button,
+.brief-container input,
+.brief-container textarea {
+  font-family: "Gotham", sans-serif !important;
+  font-weight: 400 !important;
+  letter-spacing: normal !important;
+  text-transform: none !important;
+  color: #fff;
+}
+
+/* ======================
+   RESET
+====================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ======================
+   BRIEF ISOLATION
+====================== */
+
+.brief-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 120px 20px 60px; /* مسافة تحت الهيدر */
+  background: #000;
+}
+
+.brief-container form {
+  width: 100%;
+  max-width: 480px;
+}
+
+/* نعزل كل شيء داخل الفورم */
+.brief-container * {
+  box-sizing: border-box;
+}
+/* ======================
+   LAYOUT
+====================== */
+.container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 60px 20px;
+}
+
+form {
+  width: 100%;
+  max-width: 480px;
+}
+
+/* ======================
+   PROGRESS
+====================== */
+.progress-wrap {
+  margin-bottom: 40px;
+}
+
+.progress-line {
+  height: 1px;
+  background: rgba(255,255,255,0.15);
+  position: relative;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: #fff;
+  transition: width 0.4s ease;
+}
+
+/* ======================
+   STEPS
+====================== */
+.brief-step {
+  display: none;
+}
+
+.brief-step.active {
+  display: block;
+}
+
+/* ======================
+   HEADINGS
+====================== */
+.headline {
+  font-size: 20px;
+  font-weight: 400;
+  margin-bottom: 36px;
+}
+
+/* ======================
+   TOP BAR
+====================== */
+.form-topbar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.top-btn {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.6);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.top-btn:hover {
+  color: #fff;
+}
+
+/* ======================
+   FIELDS
+====================== */
+.brief-field {
+  margin-bottom: 32px;
+  position: relative;
+}
+
+.brief-field:not(.no-line)::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: rgba(255,255,255,0.2);  /* هذا كان ناقص */
+}
+
+
+.brief-field label {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+/* ======================
+   INPUTS
+====================== */
+input,
+textarea {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 14px;
+  font-family: "Gotham";
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: rgba(255,255,255,0.4);
+}
+
+/* ======================
+   TEXTAREA (FULL BORDER)
+====================== */
+.brief-field textarea {
+  padding: 18px;
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 12px;
+  min-height: 120px;
+  transition: border-color 0.2s ease;
+}
+
+.brief-field textarea:focus {
+  border-color: #fff;
+}
+
+/* remove underline */
+.brief-field textarea::after {
+  display: none;
+}
+
+/* ======================
+   INPUT ROW (LINK)
+====================== */
+.brief-input-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.brief-input-row input {
+  flex: 1;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.25);
+  transition: border-color 0.2s ease;
+}
+
+.brief-input-row input:focus {
+  border-bottom-color: #fff;
+}
+
+/* ======================
+   brief-field HEAD (UPLOAD)
+====================== */
+.brief-field-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ======================
+   ICON BUTTON (+)
+====================== */
+.icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.3);
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+/* plus lines */
+.icon-btn::before,
+.icon-btn::after {
+  content: "";
+  position: absolute;
+  background: #fff;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.icon-btn::before {
+  width: 14px;
+  height: 1.5px;
+}
+
+.icon-btn::after {
+  width: 1.5px;
+  height: 14px;
+}
+
+.icon-btn:hover {
+  border-color: #fff;
+  transform: scale(1.05);
+}
+
+/* ======================
+   SERVICE CARDS
+====================== */
+.cards {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 32px;
+}
+
+.card {
+  padding: 18px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.2);
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.card h3 {
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.card:hover {
+  border-color: #fff;
+}
+
+.card.selected {
+  border-color: #fff;
+  background: rgba(255,255,255,0.05);
+}
+
+/* ======================
+   BUTTONS
+====================== */
+.next,
+.submit {
+  width: 100%;
+  padding: 16px;
+  border-radius: 999px;
+  border: 1px solid #fff;
+  background: transparent;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  margin-top: 20px;
+}
+
+.next:hover,
+.submit:hover {
+  background: #fff;
+  color: #000;
+}
+
+/* ======================
+   LISTS
+====================== */
+.list {
+  margin-top: 3px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.list div {
+  font-size: 13px;
+  color: rgba(255,255,255,0.7);
+}
+
+/* ======================
+   UTILITIES
+====================== */
+.hidden {
+  display: none !important;
+}
+
+
+
+/* ======================
+   LIST BASE
+====================== */
+.list {
+  margin-top: 8px;
+}
+
+/* ======================
+   FILE LIST
+====================== */
+.file-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.file-item {
+  width: 72px;
+  text-align: center;
+  position: relative;
+}
+
+.file-thumb {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.25);
+}
+
+.file-name {
+  margin-top: 6px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.65);
+  word-break: break-word;
+}
+
+/* remove button */
+.file-remove {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #000;
+  border: 1px solid #fff;
+  font-size: 11px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* ======================
+   LINKS LIST
+====================== */
+.links-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+.links-list .file-item {
+  width: 100%;
+}
+
+.links-list .file-name {
+  font-size: 13px;
+  color: rgba(255,255,255,0.7);
+}
+.summary-card {
+  margin-top: 20px;
+  padding: 24px;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 16px;
+  background: rgba(255,255,255,0.03);
+}
+
+.summary-card p {
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.link-text {
+  color: #cfcfcf;
+  display: block;
+  margin-top: 10px;
+}
+
+.link-text:hover {
+  opacity: 0.7;
+}
+::selection {
+  background: rgba(255,255,255,0.3);
+}
+.logo-wrap {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.logo {
+  width: 60px; /* عدل الحجم حسب رغبتك */
+  height: auto;
+  display: inline-block;
+}
+/* ======================
+   THANK YOU CENTER MODE
+====================== */
+
+.brief-step:last-child.active {
+  min-height: 30vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;   /* عمودي */
+  align-items: center;       /* أفقي */
+  text-align: center;
+  gap: 3px;
+}
+.brief-step:last-child .headline {
+  font-size: 26px;
+  margin-bottom: 6px;
+}
+
+.brief-step:last-child .subtitle {
+  font-size: 16px;
+  opacity: 0.8;
+}
+/* ======================
+   REMOVE AUTOFILL BACKGROUND
+====================== */
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px #000 inset !important;
+  box-shadow: 0 0 0 1000px #000 inset !important;
+  -webkit-text-fill-color: #fff !important;
+  caret-color: #fff;
+  transition: background-color 9999s ease-in-out 0s;
+}

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Contact — Bold Branding Agency</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="icon" type="image/png" href="Bold-B.svg" />
+
+  <link rel="stylesheet" href="assets/css/plugins.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <style>
+    .contact-section {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 140px 20px 80px;
+      background: #000;
+    }
+
+    .contact-wrapper {
+      width: 100%;
+      max-width: 520px;
+    }
+
+    .contact-title {
+      font-size: 28px;
+      font-weight: 400;
+      margin-bottom: 50px;
+      text-align: center;
+      color: #fff;
+    }
+
+    .contact-field {
+      margin-bottom: 28px;
+    }
+
+    .contact-field label {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 10px;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .contact-field input,
+    .contact-field textarea {
+      width: 100%;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 12px;
+      padding: 14px 18px;
+      color: #fff;
+      font-size: 14px;
+      font-family: inherit;
+      transition: 0.2s ease;
+    }
+
+    .contact-field textarea {
+      min-height: 140px;
+      resize: none;
+    }
+
+    .contact-field input:focus,
+    .contact-field textarea:focus {
+      border-color: #fff;
+    }
+
+    .contact-btn {
+      width: 100%;
+      padding: 16px;
+      border-radius: 999px;
+      border: 1px solid #fff;
+      background: transparent;
+      color: #fff;
+      font-size: 14px;
+      cursor: pointer;
+      transition: 0.2s ease;
+      margin-top: 30px;
+    }
+
+    .contact-btn:hover {
+      background: #fff;
+      color: #000;
+    }
+  </style>
+
+</head>
+
+<body>
+
+<div class="ms-main-container">
+  
+  <!-- Header -->
+  <header class="ms-header navbar-white">
+    <nav class="ms-nav">
+      <div class="ms-logo">
+        <a href="index.html" data-type="page-transition">
+          <div class="logo-dark">
+            <img src="assets/icons/Bold-B.svg" alt="logo">
+          </div>
+          <div class="logo-light current">
+            <img src="assets/icons/Bold-W.svg" alt="logo">
+          </div>
+        </a>
+      </div>
+
+      <button class="hamburger" type="button" data-toggle="navigation">
+        <span class="hamburger-box">
+          <span class="hamburger-label">menu</span>
+          <span class="hamburger-inner"></span>
+        </span>
+      </button>
+
+      <div class="height-full-viewport">
+        <ul class="ms-navbar">
+          <li class="nav-item">
+            <a href="index.html" data-type="page-transition">
+              <span class="ms-btn">home</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="project-brief.html" data-type="page-transition">
+              <span class="ms-btn">Start Now</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="contact.html" data-type="page-transition">
+              <span class="ms-btn">contact</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <!-- CONTACT SECTION -->
+  <section class="contact-section">
+    <div class="contact-wrapper">
+
+      <h1 class="contact-title">Contact Us</h1>
+
+      <form action="https://formsubmit.co/info@boldkwt.com" method="POST">
+
+        <input type="hidden" name="_captcha" value="false">
+
+        <!-- optional redirect after send -->
+        <!-- <input type="hidden" name="_next" value="https://yourdomain.com/thank-you.html"> -->
+
+        <div class="contact-field">
+          <label>Full Name</label>
+          <input type="text" name="name" required>
+        </div>
+
+        <div class="contact-field">
+          <label>Email Address</label>
+          <input type="email" name="email" required>
+        </div>
+
+        <div class="contact-field">
+          <label>Message</label>
+          <textarea name="message" required></textarea>
+        </div>
+
+        <button type="submit" class="contact-btn">
+          Send Message
+        </button>
+
+      </form>
+
+    </div>
+  </section>
+
+</div>
+
+<!-- JS -->
+<script src="assets/js/jquery-3.2.1.min.js"></script>
+<script src="assets/js/plugins.min.js"></script>
+<script src="assets/js/main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Bold — Project Brief</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Favicon -->
+    <link rel="icon" type="image/png" href="Bold-B.svg" />
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="assets/css/plugins.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/brief.css">
+</head>
+
+<body>
+
+
+  <!-- FORM SECTION -->
+  <div class="brief-container">
+    <form id="boldForm" enctype="multipart/form-data">
+      <div class="logo-wrap">
+        <a href="index.html">
+          <img src="assets/icons/Bold-W.svg" alt="Bold Logo" class="logo">
+        </a>
+      </div>
+
+      <!-- Top Bar -->
+      <div class="form-topbar">
+        <button type="button" id="backBtn" class="top-btn">Back</button>
+        <button type="button" id="langBtn" class="top-btn">
+          Arabic
+        </button>
+      </div>
+
+      <!-- Progress -->
+      <div class="progress-wrap">
+        <div class="progress-line">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+      </div>
+
+      <!-- ================= STEP 1 ================= -->
+      <section class="brief-step active">
+        <h1 class="headline">Select Service</h1>
+
+        <div class="cards">
+          <div class="card" data-value="Branding"><h3>Branding</h3></div>
+          <div class="card" data-value="Rebranding"><h3>Rebranding</h3></div>
+          <div class="card" data-value="Packaging"><h3>Packaging</h3></div>
+          <div class="card" data-value="Other"><h3>Other</h3></div>
+        </div>
+
+        <input type="hidden" id="serviceInput" name="service" required>
+
+        <div class="brief-field hidden" id="otherField">
+          <label>Please specify</label>
+          <input type="text" id="otherInput">
+        </div>
+
+        <button type="button" class="next">Continue</button>
+      </section>
+
+      <!-- ================= STEP 2 ================= -->
+      <section class="brief-step">
+        <h1 class="headline">Your Details</h1>
+
+        <div class="brief-field">
+          <label>Full Name *</label>
+          <input type="text" name="full_name" required>
+        </div>
+
+        <div class="brief-field">
+          <label>Email Address *</label>
+          <input type="email" name="email" required>
+        </div>
+
+        <div class="brief-field">
+          <label>Phone / WhatsApp *</label>
+          <input type="text" name="phone" required>
+        </div>
+
+        <div class="brief-field">
+          <label>Country / City</label>
+          <input type="text" name="location">
+        </div>
+
+        <div class="brief-field">
+          <label>Industry</label>
+          <input type="text" name="industry">
+        </div>
+
+        <div class="brief-field">
+          <label>Brand / Project Name</label>
+          <input type="text" name="brand_name">
+        </div>
+
+        <button type="button" class="next">Continue</button>
+      </section>
+
+      <!-- ================= STEP 3 ================= -->
+      <section class="brief-step">
+        <h1 class="headline">Project Details</h1>
+
+        <div class="brief-field no-line">
+          <label>About Your Project</label>
+          <textarea name="business_description" rows="4"></textarea>
+        </div>
+
+        <div class="brief-field no-line">
+          <label id="linksLabel">Reference Links</label>
+
+
+          <div class="brief-input-row">
+            <input type="text" id="linkInput" placeholder="Paste link here">
+            <button type="button" class="icon-btn link-btn" id="addLinkBtn"></button>
+          </div>
+
+          <div id="linksList" class="links-list"></div>
+        </div>
+
+        <div class="brief-field no-line">
+          <div class="brief-field-head">
+            <label>Upload References</label>
+            <button type="button" class="icon-btn" id="fileBtn"></button>
+          </div>
+
+          <input type="file" id="fileInput" name="files" hidden multiple>
+          <div id="fileList" class="file-list"></div>
+        </div>
+
+        <button type="submit" class="submit">Submit</button>
+      </section>
+
+      <!-- ================= STEP 4 ================= -->
+      <section class="brief-step">
+        <h1 class="headline">Thank You</h1>
+        <p class="subtitle">
+          We will review your project and contact you shortly.
+        </p>
+      </section>
+
+    </form>
+  </div>
+
+</div>
+<script src="assets/js/brief.js"></script>
+</body>
+</html>
