@@ -37,8 +37,6 @@ export async function GET(
     );
   }
 
-  return NextResponse.json({ project });
-}
 
     const phases = await db.all(
       `
