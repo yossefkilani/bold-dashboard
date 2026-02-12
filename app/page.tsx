@@ -5,7 +5,8 @@ export default function Home() {
   const filePath = path.join(
     process.cwd(),
     "public",
-    "index.html"   // ← عدل هنا
+    "bold-site",
+    "index.html"
   );
 
   const html = readFileSync(filePath, "utf8");

@@ -1,0 +1,70 @@
+/* HERO */
+.case-hero {
+  padding-top: 120px; /* حتى ما يدخل تحت الهيدر */
+}
+
+.case-hero-inner {
+  width: 100%;
+  height: 90vh;
+  overflow: hidden;
+}
+
+.case-hero-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* CONTENT */
+.case-container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 0 40px;
+}
+
+.case-content {
+  padding: 100px 0 60px;
+}
+
+.case-title {
+  font-size: 42px;
+  margin-bottom: 20px;
+}
+
+.case-description {
+  max-width: 600px;
+  line-height: 1.8;
+  font-size: 16px;
+}
+
+/* GALLERY */
+.case-gallery {
+  padding-bottom: 120px;
+}
+
+.case-image {
+  margin-bottom: 80px;
+}
+
+.case-image img {
+  width: 100%;
+  display: block;
+}
+
+/* MOBILE */
+@media (max-width:768px) {
+
+  .case-hero-inner {
+    height: 60vh;
+  }
+
+  .case-title {
+    font-size: 28px;
+  }
+
+  .case-image {
+    margin-bottom: 50px;
+  }
+
+}
