@@ -19,23 +19,26 @@ async function getId(
 ====================== */
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
-  try {
-    const db = await openDB();
-    const projectId = params.id;
+  const { id } = await context.params;
 
-    const project = await db.get(
-      `SELECT * FROM projects WHERE id = ?`,
-      projectId
+  const db = await openDB();
+
+  const project = await db.get(
+    `SELECT * FROM projects WHERE id = ?`,
+    id
+  );
+
+  if (!project) {
+    return NextResponse.json(
+      { error: "Project not found" },
+      { status: 404 }
     );
+  }
 
-    if (!project) {
-      return NextResponse.json(
-        { error: "Project not found" },
-        { status: 404 }
-      );
-    }
+  return NextResponse.json({ project });
+}
 
     const phases = await db.all(
       `
