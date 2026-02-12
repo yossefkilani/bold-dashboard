@@ -1,5 +1,3 @@
-export const runtime = "nodejs";
-
 import { NextRequest, NextResponse } from "next/server";
 import { openDB } from "@/lib/db";
 
@@ -23,7 +21,6 @@ export async function POST(
       );
     }
 
-    // إنشاء مشروع من الطلب
     const result = await db.run(
       `
       INSERT INTO projects (
@@ -43,7 +40,6 @@ export async function POST(
       "active"
     );
 
-    // تحديث حالة الطلب
     await db.run(
       `UPDATE submissions SET status = ? WHERE id = ?`,
       "activated",
@@ -51,14 +47,14 @@ export async function POST(
     );
 
     return NextResponse.json({
-      success: true,
-      project_id: result.lastID
+      ok: true,
+      projectId: result.lastID
     });
 
-  } catch (err) {
-    console.error("ACTIVATE ERROR:", err);
+  } catch (error) {
+    console.error("DASHBOARD ACTIVATE ERROR:", error);
     return NextResponse.json(
-      { error: "Failed to activate submission" },
+      { error: "Server error" },
       { status: 500 }
     );
   }
