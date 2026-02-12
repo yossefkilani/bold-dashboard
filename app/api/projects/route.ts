@@ -6,10 +6,7 @@ import { openDB } from "@/lib/db";
 /* ======================
    GET PROJECT + PHASES + PAYMENTS
 ====================== */
-export async function GET(
-  _req: NextRequest,
-  context: { params: Promise<{ id: string }> }
-) {
+export async function GET(request: NextRequest) {
   try {
     const { id } = await context.params;
     const db = await openDB();
