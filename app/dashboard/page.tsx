@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 export default function DashboardPage() {
-  const [notifications, setNotifications] = useState([]);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
 
   useEffect(() => {
     fetch("/api/notifications")
