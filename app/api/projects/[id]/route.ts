@@ -1,22 +1,33 @@
 export const runtime = "nodejs";
 
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { openDB } from "@/lib/db";
+
+/* ======================
+   HELPERS
+====================== */
+async function getId(
+  _: Request,
+  context: { params: { id: string } }
+) {
+  const { id } = await context.params;
+  return id;
+}
 
 /* ======================
    GET PROJECT + PHASES + PAYMENTS
 ====================== */
 export async function GET(
-  req: NextRequest,
-  context: { params: Promise<{ id: string }> }
+  req: Request,
+  context: { params: { id: string } }
 ) {
   try {
-    const { id } = await context.params;
     const db = await openDB();
+    const projectId = await getId(req, context);
 
     const project = await db.get(
       `SELECT * FROM projects WHERE id = ?`,
-      id
+      projectId
     );
 
     if (!project) {
@@ -32,8 +43,8 @@ export async function GET(
       FROM project_phases
       WHERE project_id = ?
       ORDER BY position ASC
-      `,
-      id
+    `,
+      projectId
     );
 
     const payments = await db.all(
@@ -42,8 +53,8 @@ export async function GET(
       FROM project_payments
       WHERE project_id = ?
       ORDER BY payment_date ASC
-      `,
-      id
+    `,
+      projectId
     );
 
     return NextResponse.json({
@@ -51,7 +62,6 @@ export async function GET(
       phases,
       payments
     });
-
   } catch (err) {
     console.error("PROJECT GET ERROR:", err);
     return NextResponse.json(
@@ -65,14 +75,15 @@ export async function GET(
    POST — ADD PHASE OR PAYMENT
 ====================== */
 export async function POST(
-  req: NextRequest,
-  context: { params: Promise<{ id: string }> }
+  req: Request,
+  context: { params: { id: string } }
 ) {
   try {
-    const { id: projectId } = await context.params;
     const db = await openDB();
+    const projectId = await getId(req, context);
     const body = await req.json();
 
+    /* ---------- ADD PHASE ---------- */
     if (body.type === "phase") {
       const { title, duration_days } = body;
 
@@ -88,7 +99,7 @@ export async function POST(
         SELECT MAX(position) as pos
         FROM project_phases
         WHERE project_id = ?
-        `,
+      `,
         projectId
       );
 
@@ -103,59 +114,57 @@ export async function POST(
           position,
           created_at
         ) VALUES (?, ?, ?, ?, datetime('now'))
-        `,
+      `,
         projectId,
         title,
         duration_days,
         position
       );
 
-      return NextResponse.json({ id: result.lastID });
+      return NextResponse.json({
+        id: result.lastID
+      });
     }
 
+    // ADD PAYMENT
     if (body.type === "payment") {
       const { title, amount, payment_date } = body;
 
-      const result = await db.run(
-        `
+      const result = await db.run(`
         INSERT INTO project_payments (
           project_id, title, amount, payment_date, created_at
         )
         VALUES (?, ?, ?, ?, datetime('now'))
-        `,
+      `,
         projectId,
         title,
         amount,
         payment_date
       );
 
-      const totalPaid = await db.get(
-        `
+      // تحديث المدفوع في جدول المشاريع
+      const totalPaid = await db.get(`
         SELECT SUM(amount) as sum
         FROM project_payments
         WHERE project_id = ?
-        `,
-        projectId
-      );
+      `, projectId);
 
-      await db.run(
-        `
+      await db.run(`
         UPDATE projects
         SET paid_amount = ?
         WHERE id = ?
-        `,
-        totalPaid?.sum || 0,
+      `,
+        totalPaid.sum || 0,
         projectId
       );
 
       return NextResponse.json({ id: result.lastID });
     }
-
+    
     return NextResponse.json(
       { error: "Invalid request type" },
       { status: 400 }
     );
-
   } catch (err) {
     console.error("PROJECT POST ERROR:", err);
     return NextResponse.json(
@@ -169,14 +178,15 @@ export async function POST(
    PUT — UPDATE PHASE DATE OR REFERENCES
 ====================== */
 export async function PUT(
-  req: NextRequest,
-  context: { params: Promise<{ id: string }> }
+  req: Request,
+  context: { params: { id: string } }
 ) {
   try {
-    const { id: projectId } = await context.params;
     const db = await openDB();
+    const projectId = await getId(req, context);
     const body = await req.json();
 
+    /* ---------- UPDATE PHASE START DATE ---------- */
     if (body.type === "phase-date") {
       const { phaseId, start_date } = body;
 
@@ -185,7 +195,7 @@ export async function PUT(
         UPDATE project_phases
         SET start_date = ?
         WHERE id = ? AND project_id = ?
-        `,
+      `,
         start_date,
         phaseId,
         projectId
@@ -194,13 +204,14 @@ export async function PUT(
       return NextResponse.json({ success: true });
     }
 
+    /* ---------- UPDATE REFERENCES ---------- */
     if (body.type === "references") {
       await db.run(
         `
         UPDATE projects
         SET project_references = ?
         WHERE id = ?
-        `,
+      `,
         JSON.stringify(body.project_references),
         projectId
       );
@@ -212,7 +223,6 @@ export async function PUT(
       { error: "Invalid update type" },
       { status: 400 }
     );
-
   } catch (err) {
     console.error("PROJECT PUT ERROR:", err);
     return NextResponse.json(
@@ -226,19 +236,29 @@ export async function PUT(
    DELETE PROJECT
 ====================== */
 export async function DELETE(
-  req: NextRequest,
-  context: { params: Promise<{ id: string }> }
+  req: Request,
+  context: { params: { id: string } }
 ) {
   try {
-    const { id: projectId } = await context.params;
     const db = await openDB();
+    const projectId = await getId(req, context);
 
-    await db.run(`DELETE FROM projects WHERE id = ?`, projectId);
-    await db.run(`DELETE FROM project_phases WHERE project_id = ?`, projectId);
-    await db.run(`DELETE FROM project_payments WHERE project_id = ?`, projectId);
+    await db.run(
+      `DELETE FROM projects WHERE id = ?`,
+      projectId
+    );
+
+    await db.run(
+      `DELETE FROM project_phases WHERE project_id = ?`,
+      projectId
+    );
+
+    await db.run(
+      `DELETE FROM project_payments WHERE project_id = ?`,
+      projectId
+    );
 
     return NextResponse.json({ success: true });
-
   } catch (err) {
     console.error("PROJECT DELETE ERROR:", err);
     return NextResponse.json(
