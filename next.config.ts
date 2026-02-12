@@ -1,7 +1,13 @@
-import type { NextConfig } from "next";
+import { NextRequest, NextResponse } from "next/server";
 
-const nextConfig: NextConfig = {
-  output: "standalone"
-};
-
-export default nextConfig;
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const id = params.id;
+    ...
+  } catch (error) {
+    ...
+  }
+}
