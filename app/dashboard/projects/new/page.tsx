@@ -51,7 +51,13 @@ export default function CreateProjectPage() {
     value: string
   ) {
     const copy = [...contacts];
-    copy[index][field] = value;
+
+    if (field === "type") {
+      copy[index][field] = value as Contact["type"];
+    } else {
+      copy[index][field] = value as Contact["value"];
+    }
+
     setContacts(copy);
   }
 
