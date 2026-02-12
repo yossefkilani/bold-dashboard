@@ -1,4 +1,4 @@
-import { readFileSync } from "fs";
+import fs from "fs";
 import path from "path";
 
 export default function Home() {
@@ -9,11 +9,12 @@ export default function Home() {
     "index.html"
   );
 
-  const html = readFileSync(filePath, "utf8");
+  const html = fs.readFileSync(filePath, "utf8");
 
   return (
     <div
       dangerouslySetInnerHTML={{ __html: html }}
+      suppressHydrationWarning
     />
   );
 }
