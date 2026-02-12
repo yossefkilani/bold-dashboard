@@ -1,6 +1,6 @@
 export const runtime = "nodejs";
 
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { openDB } from "@/lib/db";
 
 /* ======================
@@ -18,7 +18,7 @@ async function getId(
    GET PROJECT + PHASES + PAYMENTS
 ====================== */
 export async function GET(
-  req: Request,
+  request: NextRequest,
   context: { params: Promise<{ id: string }> }
 ) {
   try {
