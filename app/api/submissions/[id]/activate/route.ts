@@ -3,12 +3,13 @@ export const runtime = "nodejs";
 import { NextResponse } from "next/server";
 import { openDB } from "@/lib/db";
 
+
 export async function POST(
-  _req: Request,
-  { params }: { params: { id: string } }
+  request: NextRequest,
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const db = await openDB();
+    const { id } = await context.params;
 
     const submission = await db.get(
       `SELECT * FROM submissions WHERE id = ?`,
