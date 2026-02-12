@@ -1,6 +1,6 @@
 export const runtime = "nodejs";
 
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { openDB } from "@/lib/db";
 
 /* ======================
@@ -41,20 +41,18 @@ export async function GET(
    DELETE
 ====================== */
 export async function DELETE(
-  _req: Request,
-  context: { params: { id: string } }
+  _req: NextRequest,
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
     const { id } = await context.params;
     const db = await openDB();
 
-    // 1️⃣ احذف الاشعارات المرتبطة
     await db.run(
       `DELETE FROM notifications WHERE project_id = ?`,
       id
     );
 
-    // 2️⃣ احذف ال submission نفسه
     const result = await db.run(
       `DELETE FROM submissions WHERE id = ?`,
       id
