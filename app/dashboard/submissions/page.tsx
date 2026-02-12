@@ -8,6 +8,7 @@ type Submission = {
   full_name: string | null;
   email: string | null;
   project_name: string | null;
+  business_sector?: string;
   status: string | null;
   created_at: string | null;
 };
