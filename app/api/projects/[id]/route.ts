@@ -19,7 +19,7 @@ async function getId(
 ====================== */
 export async function GET(
   req: Request,
-  context: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
     const db = await openDB();
@@ -76,7 +76,7 @@ export async function GET(
 ====================== */
 export async function POST(
   req: Request,
-  context: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
     const db = await openDB();
@@ -179,7 +179,7 @@ export async function POST(
 ====================== */
 export async function PUT(
   req: Request,
-  context: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
     const db = await openDB();
@@ -235,9 +235,9 @@ export async function PUT(
 /* ======================
    DELETE PROJECT
 ====================== */
-export async function DELETE(
+ async function DELETE(
   req: Request,
-  context: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
     const db = await openDB();
