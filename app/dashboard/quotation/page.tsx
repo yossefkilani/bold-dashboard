@@ -322,7 +322,7 @@ export default function QuotationPage() {
 
               {/* Created */}
               <div>
-                {formatDate(q.created_at)}
+                {formatDate(q.created_at ?? null)}
               </div>
 
               {/* Actions */}
