@@ -23,7 +23,7 @@ export async function GET(
 ) {
   try {
     const db = await openDB();
-    const projectId = await getId(req, context);
+    const projectId = await getId(request, context);
 
     const project = await db.get(
       `SELECT * FROM projects WHERE id = ?`,
