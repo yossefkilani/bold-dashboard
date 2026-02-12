@@ -4,16 +4,15 @@ const store: Map<string, any> =
   (globalThis as any).__QUOTATION_STORE__;
 
 export async function GET(
-  _request: NextRequest,
-  { params }: { params: { id: string } }
+  request: NextRequest,
+  context: { params: Promise<{ id: string }> }
 ) {
-  const item = store.get(params.id);
+  const { id } = await context.params;
+
+  const item = store.get(id);
 
   if (!item) {
-    return NextResponse.json(
-      { error: "Not found" },
-      { status: 404 }
-    );
+    return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
 
   return NextResponse.json(item);
@@ -21,8 +20,11 @@ export async function GET(
 
 export async function DELETE(
   _request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
-  store.delete(params.id);
+  const { id } = await context.params;
+
+  store.delete(id);
+
   return NextResponse.json({ ok: true });
 }
