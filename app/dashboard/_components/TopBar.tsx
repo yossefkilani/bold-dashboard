@@ -11,6 +11,7 @@ type Props = {
 type Notification = {
   id: number;
   message: string;
+  type: string;
   project_id: number;
   is_read: number;
   created_at: string;
