@@ -18,12 +18,12 @@ async function getId(
    GET PROJECT + PHASES + PAYMENTS
 ====================== */
 export async function GET(
-  req: Request,
-  context: { params: { id: string } }
+  req: NextRequest,
+  { params }: { params: { id: string } }
 ) {
   try {
     const db = await openDB();
-    const projectId = await getId(req, context);
+    const projectId = params.id;
 
     const project = await db.get(
       `SELECT * FROM projects WHERE id = ?`,
