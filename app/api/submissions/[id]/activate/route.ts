@@ -1,8 +1,7 @@
 export const runtime = "nodejs";
 
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { openDB } from "@/lib/db";
-
 
 export async function POST(
   request: NextRequest,
@@ -10,10 +9,11 @@ export async function POST(
 ) {
   try {
     const { id } = await context.params;
+    const db = await openDB();
 
     const submission = await db.get(
       `SELECT * FROM submissions WHERE id = ?`,
-      params.id
+      id
     );
 
     if (!submission) {
@@ -47,13 +47,14 @@ export async function POST(
     await db.run(
       `UPDATE submissions SET status = ? WHERE id = ?`,
       "activated",
-      params.id
+      id
     );
 
     return NextResponse.json({
       success: true,
       project_id: result.lastID
     });
+
   } catch (err) {
     console.error("ACTIVATE ERROR:", err);
     return NextResponse.json(
