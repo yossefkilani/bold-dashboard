@@ -1,20 +1,16 @@
-import fs from "fs";
+import { readFileSync } from "fs";
 import path from "path";
 
 export default function Home() {
   const filePath = path.join(
     process.cwd(),
     "public",
-    "bold-site",
-    "index.html"
+    "index.html"   // ← عدل هنا
   );
 
-  const html = fs.readFileSync(filePath, "utf8");
+  const html = readFileSync(filePath, "utf8");
 
   return (
-    <div
-      dangerouslySetInnerHTML={{ __html: html }}
-      suppressHydrationWarning
-    />
+    <div dangerouslySetInnerHTML={{ __html: html }} />
   );
 }
