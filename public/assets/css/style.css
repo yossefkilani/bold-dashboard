@@ -1082,7 +1082,20 @@ footer {
   color: rgba(255,255,255,0.4);
 }
 
+/* KILL iOS OVERSCROLL FLASH */
+html, body {
+  background: #000 !important;
+  overscroll-behavior: none;
+  height: 100%;
+}
 
+
+.ms-main-container {
+  background: #000 !important;
+  height: 100vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
 
 /* FIX BROKEN CSS */
 .ms-btn--slider::before {
@@ -1103,6 +1116,10 @@ footer {
   background: #000 !important;
 }
 
+.ms-main-container {
+  background: #000 !important;
+  min-height: 100vh;
+}
 
 .hamburger-label {
   display: none;
@@ -1156,31 +1173,3 @@ footer {
     grid-template-columns: 1fr !important;
   }
 }
-
-/* =========================
-   CLEAN MOBILE FIX
-========================= */
-
-@media (max-width: 768px) {
-
-  html, body {
-    margin: 0;
-    padding: 0;
-    background: #000;
-  }
-
-  .ms-main-container {
-    min-height: 100dvh;
-  }
-
-  .home-slider .swiper-container {
-    height: 100dvh !important;
-  }
-
-  .ms-container.home-slider {
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-  }
-
-}
-
