@@ -103,7 +103,7 @@
     <script>
     document.addEventListener("DOMContentLoaded", function () {
 
-      fetch("/api/site-editor/hero")
+      fetch("/api/site-editor")
         .then(res => res.json())
         .then(data => {
 
@@ -112,14 +112,16 @@
 
           wrapper.innerHTML = "";
 
-          const images = data.hero_slider || [];
+          const images = data.hero_slider
+            ? JSON.parse(data.hero_slider)
+            : [];
 
           images.forEach(img => {
             const slide = document.createElement("div");
             slide.className = "swiper-slide";
 
             slide.innerHTML = `
-              <div class="slide-inner" data-swiper-parallax="45%">
+              <div class="slide-inner">
                 <div class="overlay"></div>
                 <div class="slide-inner--image"
                   style="background-image: url('${img}')">
@@ -130,11 +132,9 @@
             wrapper.appendChild(slide);
           });
 
-          // 👇 مهم جداً
           if (typeof swiper !== "undefined") {
             swiper.update();
           }
-
         });
 
     });
