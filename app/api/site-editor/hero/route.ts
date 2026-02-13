@@ -64,7 +64,7 @@ export async function PUT(req: Request) {
 
       await fs.writeFile(filePath, buffer);
 
-      saved.push("uploads/hero/" + fileName);
+      saved.push("/hero/" + fileName);
     }
 
     return NextResponse.json(saved);
