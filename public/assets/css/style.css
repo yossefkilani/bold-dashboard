@@ -1174,23 +1174,28 @@ html, body {
   }
 }
 
-/* =========================
+//* =========================
    MOBILE FULL FIT FIX
 ========================= */
 
 @media (max-width: 768px) {
 
   html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  overflow: hidden;
-}
+    margin: 0;
+    padding: 0;
+  }
 
-.ms-main-container {
-  height: 100vh;
-}
+  .ms-main-container {
+    min-height: 100dvh;
+  }
 
-.swiper-container {
-  height: 100vh !important;
+  .swiper-container {
+    height: 100dvh !important;
+  }
+
+  .ms-container.home-slider {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
 }
