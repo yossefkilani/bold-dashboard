@@ -1175,13 +1175,19 @@ html, body {
 }
 
 @media (max-width: 768px) {
-  html, body {
-    overflow: hidden;
-  }
+  hhtml, body {
+  height: 100%;
+  margin: 0;
+}
 
-  .ms-main-container,
-  .ms-container,
-  .swiper-container {
-    height: 100vh;
-  }
+.ms-main-container {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.ms-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
 }
