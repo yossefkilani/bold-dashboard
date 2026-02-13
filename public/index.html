@@ -100,44 +100,45 @@
     <script src="assets/js/jquery-3.2.1.min.js"></script>
     <script src="assets/js/plugins.min.js"></script>
     <script src="assets/js/main.js"></script>
-    <script>
-    document.addEventListener("DOMContentLoaded", function () {
+<script>
+document.addEventListener("DOMContentLoaded", function () {
 
-      fetch("/api/site-editor")
-        .then(res => res.json())
-        .then(data => {
+  fetch("/api/site-editor/hero")
+    .then(res => res.json())
+    .then(data => {
 
-          const wrapper = document.getElementById("hero-wrapper");
-          if (!wrapper) return;
+      const wrapper = document.getElementById("hero-wrapper");
+      if (!wrapper) return;
 
-          wrapper.innerHTML = "";
+      wrapper.innerHTML = "";
 
-          const images = data.hero_slider
-            ? JSON.parse(data.hero_slider)
-            : [];
+      const images = Array.isArray(data.hero_slider)
+        ? data.hero_slider
+        : [];
 
-          images.forEach(img => {
-            const slide = document.createElement("div");
-            slide.className = "swiper-slide";
+      images.forEach(img => {
+        const slide = document.createElement("div");
+        slide.className = "swiper-slide";
 
-            slide.innerHTML = `
-              <div class="slide-inner">
-                <div class="overlay"></div>
-                <div class="slide-inner--image"
-                  style="background-image: url('${img}')">
-                </div>
-              </div>
-            `;
+        slide.innerHTML = `
+          <div class="slide-inner">
+            <div class="overlay"></div>
+            <div class="slide-inner--image"
+              style="background-image: url('${img}')">
+            </div>
+          </div>
+        `;
 
-            wrapper.appendChild(slide);
-          });
+        wrapper.appendChild(slide);
+      });
 
-          if (typeof swiper !== "undefined") {
-            swiper.update();
-          }
-        });
+      if (typeof swiper !== "undefined") {
+        swiper.update();
+      }
 
     });
-    </script>
+
+});
+</script>
   </body>
 </html>
