@@ -1181,28 +1181,22 @@ html, body {
 @media (max-width: 768px) {
 
   html, body {
-    height: 100%;
     margin: 0;
-    overflow: hidden;
-  }
-
-  .ms-main-container {
-    height: 100dvh;
-    overflow: hidden;
+    padding: 0;
+    height: 100%;
   }
 
   .swiper-container {
-    height: 100dvh;
-  }
-
-  .swiper-slide,
-  .slide-inner,
-  .slide-inner--image {
-    height: 100%;
+    height: 100vh !important;
   }
 
   .ms-container {
     padding-top: 0 !important;
+  }
+
+  .expanded-timeline {
+    transform: scale(0.7);
+    transform-origin: right bottom;
   }
 
 }
