@@ -1183,3 +1183,36 @@ footer {
   }
 
 }
+
+@media (max-width: 768px) {
+
+  /* خلي السلايدر هو المرجع */
+  .home-slider {
+    position: relative;
+  }
+
+  /* ثبت CTA بالمنتصف الحقيقي */
+  .center-cta {
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  /* ثبت الأسهم بالمنتصف عمودياً */
+  .swiper-button-prev,
+  .swiper-button-next {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  /* عدل مكان التايملاين السفلي */
+  .expanded-timeline {
+    bottom: 2em;
+    right: 1.5em;
+  }
+
+  .timeline-social-fixed {
+    bottom: 2em;
+    left: 1.5em;
+  }
+
+}
