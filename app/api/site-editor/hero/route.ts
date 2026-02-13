@@ -9,7 +9,7 @@ const dataPath = path.join(
 
 const uploadDir = path.join(
   process.cwd(),
-  "public/bold-site/uploads/hero"
+  "public/uploads/hero"
 );
 
 /* ======================
