@@ -4,12 +4,12 @@ import path from "path";
 
 const dataPath = path.join(
   process.cwd(),
-  "public/bold-site/data/hero.json"
+  "public/data/hero.json"
 );
 
 const uploadDir = path.join(
   process.cwd(),
-  "public/uploads/hero"
+  "public/hero"
 );
 
 /* ======================
