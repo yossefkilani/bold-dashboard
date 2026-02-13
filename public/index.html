@@ -73,9 +73,36 @@
         
         <!-- Slide -->
         <div class="swiper-container">
-          <div class="swiper-wrapper" id="hero-wrapper">
-            <!-- slides injected dynamically -->
-          </div>
+          <<div class="swiper-wrapper">
+
+  <div class="swiper-slide">
+    <div class="slide-inner">
+      <div class="overlay"></div>
+      <div class="slide-inner--image"
+        style="background-image: url('/hero/1770846256454-Sweee-case1.jpg')">
+      </div>
+    </div>
+  </div>
+
+  <div class="swiper-slide">
+    <div class="slide-inner">
+      <div class="overlay"></div>
+      <div class="slide-inner--image"
+        style="background-image: url('/hero/1770846256458-Show-case2.jpg')">
+      </div>
+    </div>
+  </div>
+
+  <div class="swiper-slide">
+    <div class="slide-inner">
+      <div class="overlay"></div>
+      <div class="slide-inner--image"
+        style="background-image: url('/hero/1770846256467-Show-case3.jpg')">
+      </div>
+    </div>
+  </div>
+
+</div>
 
           <!-- End of Slide -->
           </div>
@@ -100,49 +127,5 @@
     <script src="assets/js/jquery-3.2.1.min.js"></script>
     <script src="assets/js/plugins.min.js"></script>
     <script src="assets/js/main.js"></script>
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-
-  fetch("/api/site-editor/hero")
-    .then(res => res.json())
-    .then(data => {
-
-      const wrapper = document.getElementById("hero-wrapper");
-      if (!wrapper) return;
-
-      wrapper.innerHTML = "";
-
-      const images = Array.isArray(data.hero_slider) && data.hero_slider.length
-        ? data.hero_slider
-        : [
-            "/hero/1770846256454-Sweee-case1.jpg",
-            "/hero/1770846256458-Show-case2.jpg",
-            "/hero/1770846256467-Show-case3.jpg"
-          ];
-
-      images.forEach(img => {
-        const slide = document.createElement("div");
-        slide.className = "swiper-slide";
-
-        slide.innerHTML = `
-          <div class="slide-inner">
-            <div class="overlay"></div>
-            <div class="slide-inner--image"
-              style="background-image: url('${img}')">
-            </div>
-          </div>
-        `;
-
-        wrapper.appendChild(slide);
-      });
-
-      if (typeof swiper !== "undefined") {
-        swiper.update();
-      }
-
-    });
-
-});
-</script>
   </body>
 </html>
