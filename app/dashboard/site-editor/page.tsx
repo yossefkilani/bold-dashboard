@@ -14,9 +14,9 @@ export default function IndexEditorPage() {
   async function loadImages() {
     const res = await fetch("/api/site-editor/hero");
     const data = await res.json();
-    setSlider(data || []);
-  }
 
+    setSlider(Array.isArray(data.hero_slider) ? data.hero_slider : []);
+  }
   /* ======================
      DRAG LOGIC
   ====================== */
