@@ -1173,3 +1173,15 @@ html, body {
     grid-template-columns: 1fr !important;
   }
 }
+
+@media (max-width: 768px) {
+  html, body {
+    overflow: hidden;
+  }
+
+  .ms-main-container,
+  .ms-container,
+  .swiper-container {
+    height: 100vh;
+  }
+}
