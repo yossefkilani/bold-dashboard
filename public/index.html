@@ -112,9 +112,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
       wrapper.innerHTML = "";
 
-      const images = Array.isArray(data.hero_slider)
+      const images = Array.isArray(data.hero_slider) && data.hero_slider.length
         ? data.hero_slider
-        : [];
+        : [
+            "/hero/1770846256454-Sweee-case1.jpg",
+            "/hero/1770846256458-Show-case2.jpg",
+            "/hero/1770846256467-Show-case3.jpg"
+          ];
 
       images.forEach(img => {
         const slide = document.createElement("div");
