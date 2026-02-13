@@ -2,141 +2,137 @@
 
 import { useEffect, useState } from "react";
 
-export default function IndexEditorPage() {
+export default function SiteEditorPage() {
 
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
   const [slider, setSlider] = useState<string[]>([]);
-  const [dragIndex, setDragIndex] = useState<number | null>(null);
 
   useEffect(() => {
-    loadImages();
+    loadData();
   }, []);
 
-  async function loadImages() {
-    const res = await fetch("/api/site-editor/hero");
-    const data = await res.json();
+  async function loadData() {
+    try {
+      const res = await fetch("/api/site-editor/hero");
+      const data = await res.json();
 
-    setSlider(Array.isArray(data.hero_slider) ? data.hero_slider : []);
-  }
-  /* ======================
-     DRAG LOGIC
-  ====================== */
-
-  function handleDragStart(index: number) {
-    setDragIndex(index);
-  }
-
-  function handleDrop(index: number) {
-    if (dragIndex === null) return;
-
-    const updated = [...slider];
-    const draggedItem = updated[dragIndex];
-
-    updated.splice(dragIndex, 1);
-    updated.splice(index, 0, draggedItem);
-
-    setSlider(updated);
-    setDragIndex(null);
+      setSlider(
+        Array.isArray(data.hero_slider)
+          ? data.hero_slider
+          : []
+      );
+    } catch {
+      console.error("Failed to load hero images");
+    } finally {
+      setLoading(false);
+    }
   }
 
   /* ======================
      SAVE ORDER
   ====================== */
 
-  async function save() {
-    await fetch("/api/site-editor/hero", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        hero_slider: slider
-      }),
-    });
+  async function handleSave() {
+    try {
+      setSaving(true);
 
-    alert("Order saved");
+      await fetch("/api/site-editor/hero", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          hero_slider: slider
+        })
+      });
+
+      alert("Saved successfully");
+
+    } catch {
+      alert("Failed to save");
+    } finally {
+      setSaving(false);
+    }
   }
 
   /* ======================
-     DELETE
+     DELETE IMAGE
   ====================== */
 
   async function removeImage(index: number) {
-    const fileName = slider[index].split("/").pop();
+    const fileName = slider[index]
+      .split("/")
+      .pop();
 
     await fetch("/api/site-editor/hero", {
       method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ fileName }),
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ fileName })
     });
 
-    await loadImages();
+    await loadData();
+  }
+
+  if (loading) {
+    return (
+      <p className="p-6 text-gray-500">
+        Loading editor...
+      </p>
+    );
   }
 
   return (
-    <div className="p-10 max-w-4xl">
+    <div className="max-w-5xl mx-auto mt-12 px-6">
 
-      <h1 className="text-2xl font-bold mb-8">
-        Hero Slider Editor
-      </h1>
+      <div className="bg-white rounded-2xl shadow p-10 space-y-10">
 
-      <div className="space-y-4">
-      {slider.map((img, index) => {
-        const fileName = img.split("/").pop();
+        <h1 className="text-3xl font-bold">
+          Hero Slider Editor
+        </h1>
 
-        return (
-          <div
-            key={img + index}
-            draggable={true}
-            onDragStart={(e) => {
-              e.dataTransfer.setData("text/plain", index.toString());
-            }}
-            onDragOver={(e) => {
-              e.preventDefault();
-            }}
-            onDrop={(e) => {
-              e.preventDefault();
-              const from = Number(e.dataTransfer.getData("text/plain"));
-              const to = index;
+        <div className="space-y-4">
+          {slider.map((img, index) => {
 
-              if (from === to) return;
+            const fileName = img.split("/").pop();
 
-              const updated = [...slider];
-              const moved = updated[from];
+            return (
+              <div
+                key={img + index}
+                className="flex items-center justify-between border rounded px-4 py-3 bg-white"
+              >
+                <div className="flex items-center gap-4">
+                  <img
+                    src={img}
+                    className="w-28 h-20 object-cover rounded"
+                  />
+                  <span className="text-sm font-medium">
+                    {fileName}
+                  </span>
+                </div>
 
-              updated.splice(from, 1);
-              updated.splice(to, 0, moved);
+                <button
+                  onClick={() => removeImage(index)}
+                  className="text-red-600 font-medium"
+                >
+                  ✕
+                </button>
+              </div>
+            );
+          })}
+        </div>
 
-              setSlider(updated);
-            }}
-            className="flex items-center justify-between border rounded px-4 py-3 bg-white cursor-move select-none"
-          >
-            <div className="flex items-center gap-4">
-              <img
-                src={img}
-                className="w-28 h-20 object-cover rounded"
-              />
-              <span className="text-sm font-medium">
-                {fileName}
-              </span>
-            </div>
-
-            <button
-              onClick={() => removeImage(index)}
-              className="text-red-600 font-medium"
-            >
-              ✕
-            </button>
-          </div>
-        );
-      })}
+        <button
+          onClick={handleSave}
+          disabled={saving}
+          className="bg-black text-white px-6 py-3 rounded-xl text-sm hover:bg-gray-800 transition"
+        >
+          {saving ? "Saving..." : "Save Changes"}
+        </button>
 
       </div>
-
-      <button
-        onClick={save}
-        className="mt-8 bg-black text-white px-6 py-3 rounded"
-      >
-        Save Order
-      </button>
-
     </div>
   );
 }
