@@ -1174,20 +1174,35 @@ html, body {
   }
 }
 
+/* =========================
+   MOBILE FULL FIT FIX
+========================= */
+
 @media (max-width: 768px) {
-  hhtml, body {
-  height: 100%;
-  margin: 0;
-}
 
-.ms-main-container {
-  height: 100dvh;
-  display: flex;
-  flex-direction: column;
-}
+  html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+  }
 
-.ms-container {
-  flex: 1;
-  display: flex;
-  align-items: center;
+  .ms-main-container {
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  .swiper-container {
+    height: 100dvh;
+  }
+
+  .swiper-slide,
+  .slide-inner,
+  .slide-inner--image {
+    height: 100%;
+  }
+
+  .ms-container {
+    padding-top: 0 !important;
+  }
+
 }
