@@ -278,7 +278,7 @@ Visual Identity
 
       {/* ACTIONS */}
       <div className="actions fixed bottom-0 left-0 right-0 bg-white border-t p-4 flex gap-3">
-      <button
+  {/*    <button
         onClick={() => {
           console.log("PREVIEW CLICKED");
           openPreview();
@@ -286,7 +286,7 @@ Visual Identity
         className="flex-1 border rounded-full py-3"
       >
         Preview
-      </button>
+      </button>*/}
 
        <button
          onClick={createQuotation}
