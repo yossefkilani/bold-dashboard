@@ -2,7 +2,6 @@ import { notFound } from "next/navigation";
 import { openDB } from "@/lib/db";
 
 export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
 
 export default async function SubmissionPage({
   params,
