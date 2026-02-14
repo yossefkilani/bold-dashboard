@@ -7,7 +7,7 @@ import path from "path";
 
 
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "https://boldbrand.io",
+  "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET,POST,DELETE,OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type",
 };
