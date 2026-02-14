@@ -3,28 +3,28 @@ import { openDB } from "@/lib/db";
 
 export const runtime = "nodejs";
 
-type SubmissionForm = {
-  project_name?: string;
-};
-
 export default async function SubmissionPage({
   params,
 }: {
   params: { id: string };
 }) {
   try {
-    const db = await openDB();   // ✅ مهم جداً
+    const id = Number(params?.id);
+
+    if (!id) return notFound();
+
+    const db = await openDB();
 
     const [rows]: any = await db.execute(
       "SELECT * FROM submissions WHERE id = ?",
-      [params.id]
+      [id]
     );
 
     const data = rows?.[0];
 
     if (!data) return notFound();
 
-    let form: SubmissionForm = {};
+    let form: any = {};
 
     try {
       form = data.form_data ? JSON.parse(data.form_data) : {};
