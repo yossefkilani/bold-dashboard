@@ -1,5 +1,5 @@
 export const runtime = "nodejs";
-
+export const dynamic = "force-dynamic";
 import { NextResponse } from "next/server";
 import { openDB } from "@/lib/db";
 import fs from "fs/promises";
@@ -13,7 +13,7 @@ const corsHeaders = {
 };
 
 export async function OPTIONS() {
-  return NextResponse.json({}, { headers: corsHeaders });
+  return json({}, { headers: corsHeaders });
 }
 /* ======================
    POST — CREATE
@@ -137,16 +137,16 @@ export async function POST(req: Request) {
    ]
  );
 
-    return NextResponse.json({ ok: true }, { headers: corsHeaders });
+    return json({ ok: true }, { headers: corsHeaders });
 
   } catch (err) {
     console.error(
       "SUBMISSIONS POST ERROR:",
       err
     );
-    return NextResponse.json(
+    return json(
       { error: "Failed to create submission" },
-      { status: 500 }
+      { status: 500, headers: corsHeaders }
     );
   }
 }
@@ -164,14 +164,14 @@ export async function GET() {
       ORDER BY created_at DESC
     `);
 
- return NextResponse.json(rows, { headers: corsHeaders });
+ return json(rows, { headers: corsHeaders });
 
   } catch (err) {
     console.error(
       "SUBMISSIONS GET ERROR:",
       err
     );
-    return NextResponse.json(
+    return json(
       { error: "Failed to create submission" },
       { status: 500, headers: corsHeaders }
     );
@@ -187,11 +187,11 @@ export async function DELETE() {
 
     await db.run(`DELETE FROM submissions`);
 
-    return NextResponse.json({ ok: true }, { headers: corsHeaders });
+    return json({ ok: true }, { headers: corsHeaders });
 
   } catch (err) {
     console.error("DELETE ALL ERROR:", err);
-    return NextResponse.json(
+    return json(
       { error: "Failed to create submission" },
       { status: 500, headers: corsHeaders }
     );
