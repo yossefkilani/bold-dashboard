@@ -26,8 +26,10 @@ export async function OPTIONS() {
 ====================== */
 export async function POST(req: Request) {
   try {
-    const formData = await req.formData();
 
+    const db = await openDB();   // 👈 هون لازم يكون
+
+    const formData = await req.formData();
     /* --------------------
        TEXT FIELDS
     -------------------- */
