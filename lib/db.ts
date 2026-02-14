@@ -2,7 +2,7 @@ import mysql from "mysql2/promise";
 
 let pool: any = null;
 
-export function openDB() {
+export async function openDB() {
   if (pool) return pool;
 
   pool = mysql.createPool({

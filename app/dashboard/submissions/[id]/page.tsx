@@ -9,10 +9,9 @@ export default async function SubmissionPage({
   params: { id: string };
 }) {
   try {
-    const id = Number(params?.id);
-
-    if (!id) return notFound();
-
+    const id = parseInt(params.id, 10);
+    if (isNaN(id)) return notFound();
+    
     const db = await openDB();
 
     const [rows]: any = await db.execute(
