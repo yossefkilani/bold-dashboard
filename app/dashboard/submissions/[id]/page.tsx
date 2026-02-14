@@ -3,6 +3,19 @@ import { openDB } from "@/lib/db";
 
 export const runtime = "nodejs";
 
+type FormDataType = {
+  project_name?: string;
+  project_description?: string;
+  full_name?: string;
+  email?: string;
+  phone?: string;
+  location?: string;
+  industry?: string;
+  service?: string;
+  other_service?: string;
+  links?: string[];
+};
+
 export default async function SubmissionPage({
   params,
 }: {
@@ -25,10 +38,12 @@ export default async function SubmissionPage({
 
   if (!data) return notFound();
 
-  let form: any = {};
+  let form: FormDataType = {};
 
   try {
-    form = data.form_data ? JSON.parse(data.form_data) : {};
+    form = data.form_data
+      ? JSON.parse(data.form_data)
+      : {};
   } catch {
     form = {};
   }
@@ -47,17 +62,14 @@ export default async function SubmissionPage({
           </p>
         </div>
 
-        {/* INFO BLOCK */}
+        {/* INFO */}
         <div className="space-y-6">
-
           <Info label="Service" value={form.other_service || form.service} />
           <Info label="Full Name" value={form.full_name} />
           <Info label="Email Address" value={form.email} />
           <Info label="Phone / WhatsApp" value={form.phone} />
           <Info label="Country / City" value={form.location} />
-          <Info label="Brand / Project Name" value={form.project_name} />
           <Info label="Industry" value={form.industry} />
-
         </div>
 
         {/* DESCRIPTION */}
@@ -71,13 +83,13 @@ export default async function SubmissionPage({
         </div>
 
         {/* LINKS */}
-        {form.links?.length > 0 && (
+        {Array.isArray(form.links) && form.links.length > 0 && (
           <div className="space-y-3">
             <p className="text-sm text-gray-500">
               Reference Links
             </p>
             <div className="space-y-2">
-              {form.links.map((link: string, i: number) => (
+              {form.links.map((link, i) => (
                 <a
                   key={i}
                   href={link}
@@ -91,9 +103,12 @@ export default async function SubmissionPage({
           </div>
         )}
 
-        {/* CREATED */}
+        {/* FOOTER */}
         <div className="pt-6 border-t text-xs text-gray-400">
-          Created at: {new Date(data.created_at).toLocaleString()}
+          Created at:{" "}
+          {data.created_at
+            ? new Date(data.created_at).toLocaleString()
+            : "—"}
         </div>
 
       </div>
@@ -101,7 +116,13 @@ export default async function SubmissionPage({
   );
 }
 
-function Info({ label, value }: { label: string; value?: string }) {
+function Info({
+  label,
+  value,
+}: {
+  label: string;
+  value?: string;
+}) {
   return (
     <div>
       <p className="text-sm text-gray-500">{label}</p>
