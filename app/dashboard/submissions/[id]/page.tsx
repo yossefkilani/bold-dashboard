@@ -30,7 +30,9 @@ export default async function SubmissionPage({
 
   return (
     <div>
-      <h1>{form.project_name || "No name"}</h1>
+      <h1>
+        {form.project_name || data.project_name || data.full_name || "Untitled"}
+      </h1>
     </div>
   );
 }
