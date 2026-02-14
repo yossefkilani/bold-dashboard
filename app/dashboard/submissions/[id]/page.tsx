@@ -3,34 +3,34 @@ import { openDB } from "@/lib/db";
 
 export const runtime = "nodejs";
 
-export default async function Page({
+export default async function SubmissionPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const id = Number(params.id);
+  const { id } = await params;
 
-  if (!id) {
-    return <div>Invalid ID</div>;
-  }
+  const numericId = Number(id);
+  if (!numericId) return notFound();
 
   const db = await openDB();
 
   const [rows]: any = await db.execute(
     "SELECT * FROM submissions WHERE id = ?",
-    [id]
+    [numericId]
   );
 
-  const submission = rows?.[0];
+  const data = rows?.[0];
+  if (!data) return notFound();
 
-  if (!submission) {
-    return notFound();
-  }
+  let form: any = {};
+  try {
+    form = data.form_data ? JSON.parse(data.form_data) : {};
+  } catch {}
 
   return (
-    <div style={{ padding: 40 }}>
-      <h1>Submission #{submission.id}</h1>
-      <pre>{JSON.stringify(submission, null, 2)}</pre>
+    <div>
+      <h1>{form.project_name || "No name"}</h1>
     </div>
   );
 }
