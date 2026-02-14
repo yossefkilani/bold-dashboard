@@ -3,7 +3,7 @@ import { openDB } from "@/lib/db";
 
 export const runtime = "nodejs";
 
-eexport default async function SubmissionPage({
+export default async function SubmissionPage({
   params,
 }: {
   params: { id: string };
