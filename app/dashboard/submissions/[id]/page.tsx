@@ -3,41 +3,34 @@ import { openDB } from "@/lib/db";
 
 export const runtime = "nodejs";
 
-export default async function SubmissionPage({
+eexport default async function SubmissionPage({
   params,
 }: {
   params: { id: string };
 }) {
-  try {
-    const id = parseInt(params.id, 10);
-    if (isNaN(id)) return notFound();
-    
-    const db = await openDB();
+  const id = parseInt(params.id, 10);
 
-    const [rows]: any = await db.execute(
-      "SELECT * FROM submissions WHERE id = ?",
-      [id]
-    );
+  if (isNaN(id)) return notFound();
 
-    const data = rows?.[0];
+  const db = await openDB();
 
-    if (!data) return notFound();
+  const [rows]: any = await db.execute(
+    "SELECT * FROM submissions WHERE id = ?",
+    [id]
+  );
 
-    let form: any = {};
+  const data = rows?.[0];
 
-    try {
-      form = data.form_data ? JSON.parse(data.form_data) : {};
-    } catch {
-      form = {};
-    }
+  if (!data) return notFound();
 
-    return (
-      <div>
-        <h1>{form.project_name || "No name"}</h1>
-      </div>
-    );
-  } catch (err) {
-    console.error("PAGE ERROR:", err);
-    return <div>Server Error</div>;
-  }
+  const form =
+    data.form_data && typeof data.form_data === "string"
+      ? JSON.parse(data.form_data)
+      : {};
+
+  return (
+    <div>
+      <h1>{form.project_name || "No name"}</h1>
+    </div>
+  );
 }
