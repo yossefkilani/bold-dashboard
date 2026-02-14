@@ -3,20 +3,21 @@ import { openDB } from "@/lib/db";
 
 export const runtime = "nodejs";
 
+/* ======================
+   GET SINGLE
+====================== */
 export async function GET(
   req: NextRequest,
-  context: { params: Promise<{ id: string }> }
+  { params }: { params: { id: string } }
 ) {
-  const { id } = await context.params;
-
-  const db = openDB();
+  const db = await openDB();
 
   const [rows]: any = await db.execute(
     "SELECT * FROM submissions WHERE id = ?",
-    [id]
+    [params.id]
   );
 
-  const data = rows[0];
+  const data = rows?.[0];
 
   if (!data) {
     return NextResponse.json(
@@ -28,17 +29,18 @@ export async function GET(
   return NextResponse.json(data);
 }
 
+/* ======================
+   DELETE
+====================== */
 export async function DELETE(
   req: NextRequest,
-  context: { params: Promise<{ id: string }> }
+  { params }: { params: { id: string } }
 ) {
-  const { id } = await context.params;
-
-  const db = openDB();
+  const db = await openDB();
 
   await db.execute(
     "DELETE FROM submissions WHERE id = ?",
-    [id]
+    [params.id]
   );
 
   return NextResponse.json({ ok: true });

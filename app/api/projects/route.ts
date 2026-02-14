@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
   try {
     const db = await openDB();
 
-    const projects = await db.all(
+    const projects = await db.execute(
       `SELECT * FROM projects ORDER BY created_at DESC`
     );
 
@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
     const db = await openDB();
     const body = await request.json();
 
-    const result = await db.run(
+    const result = await db.execute(
       `
       INSERT INTO projects (
         full_name,
