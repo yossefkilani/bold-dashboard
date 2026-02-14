@@ -98,33 +98,33 @@ export async function POST(req: Request) {
       files: savedFiles
     });
 
- const result = await db.run(
-   `
-   INSERT INTO submissions (
-     full_name,
-     email,
-     phone,
-     business_sector,
-     project_name,
-     form_data,
-     status,
-     created_at
-   )
-   VALUES (?, ?, ?, ?, ?, ?, 'new', datetime('now'))
-   `,
-   [
-     full_name,
-     email,
-     phone,
-     industry,
-     project_name,
-     form_data
-   ]
- );
+    const [result]: any = await db.execute(
+      `
+      INSERT INTO submissions (
+        full_name,
+        email,
+        phone,
+        business_sector,
+        project_name,
+        form_data,
+        status,
+        created_at
+      )
+      VALUES (?, ?, ?, ?, ?, ?, 'new', NOW())
+      `,
+      [
+        full_name,
+        email,
+        phone,
+        industry,
+        project_name,
+        form_data
+      ]
+    );
 
- const submissionId = result.lastID;
+    const submissionId = result.insertId;
 
- await db.run(
+ await db.execute(
    `
    INSERT INTO notifications (
      type,
@@ -133,7 +133,7 @@ export async function POST(req: Request) {
      is_read,
      created_at
    )
-   VALUES (?, ?, ?, 0, datetime('now'))
+   VALUES (?, ?, ?, 0, NOW())
    `,
    [
      "NEW_SUBMISSION",
@@ -160,12 +160,12 @@ export async function GET() {
   try {
     const db = await openDB();
 
-    const rows = await db.all(`
-      SELECT *
-      FROM submissions
-      ORDER BY created_at DESC
-    `);
-
+  const [rows] = await db.execute(`
+    SELECT *
+    FROM submissions
+    ORDER BY created_at DESC
+  `);
+  
  return NextResponse.json(rows, { headers: corsHeaders });
 
 } catch (err) {
@@ -184,14 +184,14 @@ export async function DELETE() {
   try {
     const db = await openDB();
 
-    await db.run(`DELETE FROM submissions`);
+    await db.execute(`DELETE FROM submissions`);
 
     return NextResponse.json({ ok: true }, { headers: corsHeaders });
 
   } catch (err) {
     console.error("DELETE ALL ERROR:", err);
     return NextResponse.json(
-      { error: "Failed to create submission" },
+      { error: String(err) },
       { status: 500, headers: corsHeaders }
     );
   }
