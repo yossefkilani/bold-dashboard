@@ -1,3 +1,22 @@
+import { notFound } from "next/navigation";
+import { openDB } from "@/lib/db";
+
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+export const dynamicParams = true;
+
+type SubmissionForm = {
+  full_name?: string;
+  email?: string;
+  phone?: string;
+  location?: string;
+  industry?: string;
+  project_name?: string;
+  project_description?: string;
+  service?: string;
+  other_service?: string;
+};
+
 export default async function SubmissionPage({
   params,
 }: {
