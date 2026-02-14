@@ -11,9 +11,15 @@ const corsHeaders = {
   "Access-Control-Allow-Methods": "GET,POST,DELETE,OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type",
 };
+function json(data: any, init?: ResponseInit) {
+  return NextResponse.json(data, {
+    ...init,
+    headers: corsHeaders,
+  });
+}
 
 export async function OPTIONS() {
-  return json({}, { headers: corsHeaders });
+  return json({});
 }
 /* ======================
    POST — CREATE
