@@ -8,7 +8,7 @@ export default async function SubmissionPage({
 }: {
   params: { id: string };
 }) {
-  const { id } = await params;
+  const { id } = params;
 
   const db = await openDB();
 
