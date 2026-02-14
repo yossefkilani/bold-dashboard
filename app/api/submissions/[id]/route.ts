@@ -8,15 +8,14 @@ import { openDB } from "@/lib/db";
 ====================== */
 export async function GET(
   req: NextRequest,
-  context: { params: Promise<{ id: string }> }
+  { params }: { params: { id: string } }
 ) {
   try {
-    const { id } = await context.params;
     const db = await openDB();
 
     const row = await db.get(
       "SELECT * FROM submissions WHERE id = ?",
-      id
+      params.id
     );
 
     if (!row) {
@@ -42,20 +41,19 @@ export async function GET(
 ====================== */
 export async function DELETE(
   _req: NextRequest,
-  context: { params: Promise<{ id: string }> }
+  { params }: { params: { id: string } }
 ) {
   try {
-    const { id } = await context.params;
     const db = await openDB();
 
     await db.run(
       `DELETE FROM notifications WHERE project_id = ?`,
-      id
+      params.id
     );
 
     const result = await db.run(
       `DELETE FROM submissions WHERE id = ?`,
-      id
+      params.id
     );
 
     if (result.changes === 0) {
