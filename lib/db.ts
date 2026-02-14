@@ -8,7 +8,7 @@ export async function openDB() {
   if (db) return db;
 
   db = await open({
-    filename: path.join(process.cwd(), "dev.db"),
+    filename: "/tmp/dev.db",
     driver: sqlite3.Database
   });
 

@@ -166,15 +166,15 @@ export async function GET() {
       ORDER BY created_at DESC
     `);
 
- return NextResponse.json(rows, { headers: corsHeaders });
+    return NextResponse.json(rows, { headers: corsHeaders });
 
   } catch (err) {
-  console.error("SUBMISSIONS POST ERROR:", err);
-  return NextResponse.json(
-    { error: String(err) },
-    { status: 500, headers: corsHeaders }
-  );
-}
+    console.error("SUBMISSIONS GET ERROR:", err);
+    return NextResponse.json(
+      { error: String(err) },
+      { status: 500, headers: corsHeaders }
+    );
+  }
 }
 
 /* ======================
