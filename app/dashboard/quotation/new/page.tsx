@@ -57,24 +57,24 @@ Visual Identity
     setPhases(copy);
   };
 
-  /* ========= PREVIEW ========= */
-  const openPreview = () => {
-    const params = new URLSearchParams({
-      client,
-      project,
-      date,
-      total,
-      currency,
-      terms,
-      bank: includeBankInfo ? "1" : "0",
-      phases: JSON.stringify(phases)
-    });
+  // /* ========= PREVIEW ========= */
+  // const openPreview = () => {
+  //   const params = new URLSearchParams({
+  //     client,
+  //     project,
+  //     date,
+  //     total,
+  //     currency,
+  //     terms,
+  //     bank: includeBankInfo ? "1" : "0",
+  //     phases: JSON.stringify(phases)
+  //   });
 
-    window.open(
-      `/quotation-static/template.html?${params.toString()}`,
-      "_blank"
-    );
-  };
+  //   window.open(
+  //     `/quotation-static/template.html?${params.toString()}`,
+  //     "_blank"
+  //   );
+  // };
   
   /* ========= CREATE ========= */
   async function createQuotation() {
