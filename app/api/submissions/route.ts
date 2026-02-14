@@ -168,11 +168,11 @@ export async function GET() {
 
  return NextResponse.json(rows, { headers: corsHeaders });
 
-  } catch (err) {
-  console.error("SUBMISSIONS POST ERROR:", err);
+} catch (err) {
+  console.error("SUBMISSIONS ERROR:", err);
   return NextResponse.json(
     { error: String(err) },
-    { status: 500, headers: corsHeaders }
+    { status: 500 }
   );
 }
 }
