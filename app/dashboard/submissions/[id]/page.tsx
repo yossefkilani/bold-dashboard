@@ -3,6 +3,10 @@ import { openDB } from "@/lib/db";
 
 export const runtime = "nodejs";
 
+type SubmissionForm = {
+  project_name?: string;
+};
+
 export default async function SubmissionPage({
   params,
 }: {
@@ -20,7 +24,8 @@ export default async function SubmissionPage({
 
     if (!data) return notFound();
 
-    let form = {};
+    let form: SubmissionForm = {};
+
     try {
       form = data.form_data ? JSON.parse(data.form_data) : {};
     } catch {
@@ -29,7 +34,7 @@ export default async function SubmissionPage({
 
     return (
       <div>
-        <h1>{form.project_name}</h1>
+        <h1>{form.project_name || "No name"}</h1>
       </div>
     );
   } catch (err) {
