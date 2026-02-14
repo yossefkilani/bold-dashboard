@@ -8,24 +8,32 @@ export default async function SubmissionPage({
 }: {
   params: { id: string };
 }) {
-  const db = openDB();
+  try {
+    const db = openDB();
 
-  const [rows]: any = await db.execute(
-    "SELECT * FROM submissions WHERE id = ?",
-    [params.id]
-  );
+    const [rows]: any = await db.execute(
+      "SELECT * FROM submissions WHERE id = ?",
+      [params.id]
+    );
 
-  const data = rows[0];
+    const data = rows?.[0];
 
-  if (!data) return notFound();
+    if (!data) return notFound();
 
-  const form = data.form_data
-    ? JSON.parse(data.form_data)
-    : {};
+    let form = {};
+    try {
+      form = data.form_data ? JSON.parse(data.form_data) : {};
+    } catch {
+      form = {};
+    }
 
-  return (
-    <div>
-      <h1>{form.project_name}</h1>
-    </div>
-  );
+    return (
+      <div>
+        <h1>{form.project_name}</h1>
+      </div>
+    );
+  } catch (err) {
+    console.error("PAGE ERROR:", err);
+    return <div>Server Error</div>;
+  }
 }
