@@ -5,6 +5,16 @@ import { openDB } from "@/lib/db";
 import fs from "fs/promises";
 import path from "path";
 
+
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "https://boldbrand.io",
+  "Access-Control-Allow-Methods": "GET,POST,DELETE,OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type",
+};
+
+export async function OPTIONS() {
+  return NextResponse.json({}, { headers: corsHeaders });
+}
 /* ======================
    POST — CREATE
 ====================== */
@@ -127,7 +137,7 @@ export async function POST(req: Request) {
    ]
  );
 
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({ ok: true }, { headers: corsHeaders });
 
   } catch (err) {
     console.error(
@@ -154,7 +164,7 @@ export async function GET() {
       ORDER BY created_at DESC
     `);
 
-    return NextResponse.json(rows);
+ return NextResponse.json(rows, { headers: corsHeaders });
 
   } catch (err) {
     console.error(
@@ -162,8 +172,8 @@ export async function GET() {
       err
     );
     return NextResponse.json(
-      { error: "Failed to load submissions" },
-      { status: 500 }
+      { error: "Failed to create submission" },
+      { status: 500, headers: corsHeaders }
     );
   }
 }
@@ -177,13 +187,13 @@ export async function DELETE() {
 
     await db.run(`DELETE FROM submissions`);
 
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({ ok: true }, { headers: corsHeaders });
 
   } catch (err) {
     console.error("DELETE ALL ERROR:", err);
     return NextResponse.json(
-      { error: "Failed to delete submissions" },
-      { status: 500 }
+      { error: "Failed to create submission" },
+      { status: 500, headers: corsHeaders }
     );
   }
 }
