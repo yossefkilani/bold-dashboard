@@ -77,7 +77,7 @@ function createPage(pagePhases, pageIndex, isLast) {
         <div class="en">Bold Advertising and Marketing</div>
       </div>
       <div class="logo">
-        <img src="/bold.svg" />
+        <img src="//quotation-static/bold.svg" />
       </div>
     </header>
 
@@ -190,7 +190,7 @@ if (showBank) {
          <div class="en">Bold Advertising and Marketing</div>
         </div>
         <div class="logo">
-          <img src="/bold.svg" />
+          <img src="//quotation-static/bold.svg" />
         </div>
       </header>
 
