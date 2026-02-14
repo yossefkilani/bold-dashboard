@@ -19,7 +19,7 @@ function json(data: any, init?: ResponseInit) {
 }
 
 export async function OPTIONS() {
-  return json({});
+  return NextResponse.json({});
 }
 /* ======================
    POST — CREATE
@@ -143,18 +143,15 @@ export async function POST(req: Request) {
    ]
  );
 
-    return json({ ok: true }, { headers: corsHeaders });
+    return NextResponse.json({ ok: true }, { headers: corsHeaders });
 
   } catch (err) {
-    console.error(
-      "SUBMISSIONS POST ERROR:",
-      err
-    );
-    return json(
-      { error: "Failed to create submission" },
-      { status: 500, headers: corsHeaders }
-    );
-  }
+  console.error("SUBMISSIONS POST ERROR:", err);
+  return NextResponse.json(
+    { error: String(err) },
+    { status: 500, headers: corsHeaders }
+  );
+}
 }
 
 /* ======================
@@ -170,18 +167,15 @@ export async function GET() {
       ORDER BY created_at DESC
     `);
 
- return json(rows, { headers: corsHeaders });
+ return NextResponse.json(rows, { headers: corsHeaders });
 
   } catch (err) {
-    console.error(
-      "SUBMISSIONS GET ERROR:",
-      err
-    );
-    return json(
-      { error: "Failed to create submission" },
-      { status: 500, headers: corsHeaders }
-    );
-  }
+  console.error("SUBMISSIONS POST ERROR:", err);
+  return NextResponse.json(
+    { error: String(err) },
+    { status: 500, headers: corsHeaders }
+  );
+}
 }
 
 /* ======================
@@ -193,11 +187,11 @@ export async function DELETE() {
 
     await db.run(`DELETE FROM submissions`);
 
-    return json({ ok: true }, { headers: corsHeaders });
+    return NextResponse.json({ ok: true }, { headers: corsHeaders });
 
   } catch (err) {
     console.error("DELETE ALL ERROR:", err);
-    return json(
+    return NextResponse.json(
       { error: "Failed to create submission" },
       { status: 500, headers: corsHeaders }
     );
