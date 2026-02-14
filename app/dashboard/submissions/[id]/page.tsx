@@ -13,7 +13,7 @@ export default async function SubmissionPage({
   params: { id: string };
 }) {
   try {
-    const db = openDB();
+    const db = await openDB();   // ✅ مهم جداً
 
     const [rows]: any = await db.execute(
       "SELECT * FROM submissions WHERE id = ?",
