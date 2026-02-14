@@ -26,7 +26,6 @@ export async function OPTIONS() {
 ====================== */
 export async function POST(req: Request) {
   try {
-    const db = await openDB();
     const formData = await req.formData();
 
     /* --------------------
@@ -58,9 +57,7 @@ export async function POST(req: Request) {
       "public/uploads"
     );
 
-    await fs.mkdir(uploadDir, {
-      recursive: true
-    });
+
 
     const files = formData.getAll("files") as File[];
     const savedFiles: string[] = [];
@@ -77,7 +74,7 @@ export async function POST(req: Request) {
         fileName
       );
 
-      await fs.writeFile(filePath, buffer);
+   
 
       savedFiles.push(fileName);
     }
