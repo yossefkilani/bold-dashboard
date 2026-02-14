@@ -103,7 +103,7 @@ export default function SubmissionsPage() {
     try {
       await Promise.all(
         selected.map(id =>
-          fetch(`/api/submissions/${id}`, {
+          fetch(`https://admin.boldbrand.io/api/submissions${id}`, {
             method: "DELETE",
           })
         )
