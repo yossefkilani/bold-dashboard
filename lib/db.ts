@@ -8,8 +8,8 @@ export async function openDB() {
   if (db) return db;
 
   db = await open({
-    filename: path.join(process.cwd(), "dev.db")
-    driver: sqlite3.Database
+    filename: path.join(process.cwd(), "dev.db"),
+    driver: sqlite3.Database,
   });
 
   // إنشاء الجداول داخل الدالة فقط
