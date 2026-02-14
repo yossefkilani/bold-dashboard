@@ -8,13 +8,11 @@ export default async function SubmissionPage({
 }: {
   params: { id: string };
 }) {
-  const id = params.id;
-
   const db = openDB();
 
   const [rows]: any = await db.execute(
     "SELECT * FROM submissions WHERE id = ?",
-    [id]
+    [params.id]
   );
 
   const data = rows[0];
@@ -27,7 +25,7 @@ export default async function SubmissionPage({
 
   return (
     <div>
-      {/* نفس UI تبعك */}
+      <h1>{form.project_name}</h1>
     </div>
   );
 }
