@@ -64,13 +64,14 @@ export async function POST(req: Request) {
       secure: false,
     });
 
-    await client.ensureDir("/public_html/uploads");
+    await client.ensureDir("uploads");
+
 
     const stream = Readable.from(buffer);
 
     await client.uploadFrom(
       stream,
-      `/public_html/uploads/${fileName}`
+      `uploads/${fileName}`
     );
 
     client.close();
