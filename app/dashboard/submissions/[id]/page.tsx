@@ -102,45 +102,57 @@ export default async function SubmissionPage({ params }: PageProps) {
             </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {form.files.map((f: string, i: number) => {
-                const fileUrl = `https://boldbrand.io/uploads/${f}`;
-                const fileName = f.split("/").pop();
-                const isImage = /\.(jpg|jpeg|png|webp|gif)$/i.test(f);
+                          {form.files.map((f: string, i: number) => {
+                            const fileUrl = `https://boldbrand.io/uploads/${f}`;
+                            const fileName = f.split("/").pop();
+                            const isImage = /\.(jpg|jpeg|png|webp|gif)$/i.test(f);
 
-                return (
-                  <div
-                    key={i}
-                    className="rounded-2xl shadow-md border bg-gray-50 p-4"
-                  >
-                    {isImage ? (
-                      <img
-                        src={fileUrl}
-                        alt=""
-                        className="w-full h-48 object-cover rounded mb-3"
-                      />
-                    ) : (
-                      <div className="w-full h-48 flex items-center justify-center bg-gray-100 rounded mb-3 text-sm text-gray-400">
-                        File
+                            return (
+                              <div
+                                key={i}
+                                className="rounded-2xl shadow-md border bg-gray-50 p-4"
+                              >
+                                {isImage ? (
+                                  <img
+                                    src={fileUrl}
+                                    alt=""
+                                    className="w-full h-48 object-cover rounded mb-3"
+                                  />
+                                ) : (
+                                  <div className="w-full h-48 flex items-center justify-center bg-gray-100 rounded mb-3 text-sm text-gray-400">
+                                    File
+                                  </div>
+                                )}
+
+                                <a
+                                  href={fileUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-sm text-blue-600 hover:underline break-all"
+                                >
+                                  {fileName}
+                                </a>
+                              </div>
+                            );
+                          })}
+                        </div>
                       </div>
                     )}
 
-                    <a
-                      href={fileUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm text-blue-600 hover:underline break-all"
-                    >
-                      {fileName}
-                    </a>
-                  </div>
-                );
-              }
+                    <div className="pt-6 border-t text-xs text-gray-400">
+                      Created at: {new Date(data.created_at).toLocaleString()}
+                    </div>
 
-function Info({ label, value }: { label: string; value?: string }) {
-  return (
-    <div>
-      <p className="text-sm text-gray-500">{label}</p>
-      <p className="font-semibold">{value || "—"}</p>
-    </div>
-  );
-}
+                  </div>
+                </div>
+              );
+            }
+
+            function Info({ label, value }: { label: string; value?: string }) {
+              return (
+                <div>
+                  <p className="text-sm text-gray-500">{label}</p>
+                  <p className="font-semibold">{value || "—"}</p>
+                </div>
+              );
+            }
