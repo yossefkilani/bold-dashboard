@@ -45,7 +45,14 @@ export async function POST(req: Request) {
     }
 
     const buffer = Buffer.from(await file.arrayBuffer());
-    const fileName = `${Date.now()}-${file.name.replace(/\s/g, "_")}`;
+    const originalName = file.name || "file";
+    const extension = originalName.includes(".")
+      ? originalName.split(".").pop()
+      : "jpg";
+
+    const safeBase = originalName.replace(/\.[^/.]+$/, "").replace(/\s/g, "_");
+
+    const fileName = `${Date.now()}-${safeBase}.${extension}`;
 
     const client = new Client();
 
