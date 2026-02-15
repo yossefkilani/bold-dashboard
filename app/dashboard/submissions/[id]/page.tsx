@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation";
 import { openDB } from "@/lib/db";
 
-export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-export const dynamicParams = true;
+export const runtime = "nodejs";
+export const revalidate = 0;
 
 type SubmissionForm = {
   full_name?: string;
@@ -17,36 +17,34 @@ type SubmissionForm = {
   other_service?: string;
 };
 
-export default async function SubmissionPage({
-  params,
-}: {
+type PageProps = {
   params: { id: string };
-}) {
-  const id = Number(params.id);
+};
 
-  if (!id || isNaN(id)) {
-    return notFound();
+export default async function SubmissionPage({ params }: PageProps) {
+  const id = Number(params?.id);
+
+  if (!id || Number.isNaN(id)) {
+    notFound();
   }
 
   const db = await openDB();
 
   const [rows]: any = await db.execute(
-    "SELECT * FROM submissions WHERE id = ?",
+    "SELECT * FROM submissions WHERE id = ? LIMIT 1",
     [id]
   );
 
   const data = rows?.[0];
 
   if (!data) {
-    return notFound();
+    notFound();
   }
 
   let form: SubmissionForm = {};
 
   try {
-    form = data.form_data
-      ? JSON.parse(data.form_data)
-      : {};
+    form = data.form_data ? JSON.parse(data.form_data) : {};
   } catch {
     form = {};
   }
@@ -72,7 +70,10 @@ export default async function SubmissionPage({
         <Info label="Service" value={form.other_service || form.service} />
 
         <div className="pt-6 border-t text-xs text-gray-400">
-          Created at: {new Date(data.created_at).toLocaleString()}
+          Created at:{" "}
+          {data.created_at
+            ? new Date(data.created_at).toLocaleString()
+            : "—"}
         </div>
 
       </div>
@@ -80,7 +81,13 @@ export default async function SubmissionPage({
   );
 }
 
-function Info({ label, value }: { label: string; value?: string }) {
+function Info({
+  label,
+  value,
+}: {
+  label: string;
+  value?: string;
+}) {
   return (
     <div>
       <p className="text-sm text-gray-500">{label}</p>
