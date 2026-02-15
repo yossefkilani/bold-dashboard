@@ -1,3 +1,9 @@
-export default function Test() {
-  return <div>TEST ID PAGE</div>;
+export const dynamic = "force-dynamic";
+
+export default async function SubmissionPage({ params }: any) {
+  return (
+    <div>
+      ID IS: {params.id}
+    </div>
+  );
 }
