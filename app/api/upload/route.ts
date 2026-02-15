@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { Client } from "basic-ftp";
-import path from "path";
+import { Readable } from "stream";
 
 export const runtime = "nodejs";
 
@@ -27,7 +27,13 @@ export async function POST(req: Request) {
     });
 
     await client.ensureDir("/public_html/uploads");
-    await client.uploadFrom(Buffer.from(buffer), `/public_html/uploads/${fileName}`);
+
+    const stream = Readable.from(buffer);
+
+    await client.uploadFrom(
+      stream,
+      `/public_html/uploads/${fileName}`
+    );
 
     client.close();
 
