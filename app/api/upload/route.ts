@@ -4,7 +4,17 @@ import { Readable } from "stream";
 
 export const runtime = "nodejs";
 
-const MAX_SIZE = 5 * 1024 * 1024; // 5MB
+const MAX_SIZE = 5 * 1024 * 1024;
+
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type",
+};
+
+export async function OPTIONS() {
+  return NextResponse.json({}, { headers: corsHeaders });
+}
 
 export async function POST(req: Request) {
   try {
@@ -12,17 +22,26 @@ export async function POST(req: Request) {
     const file = formData.get("file") as File;
 
     if (!file) {
-      return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
+      return NextResponse.json(
+        { error: "No file uploaded" },
+        { status: 400, headers: corsHeaders }
+      );
     }
 
     if (file.size > MAX_SIZE) {
-      return NextResponse.json({ error: "File too large" }, { status: 400 });
+      return NextResponse.json(
+        { error: "File too large" },
+        { status: 400, headers: corsHeaders }
+      );
     }
 
     const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"];
 
     if (!allowedTypes.includes(file.type)) {
-      return NextResponse.json({ error: "Invalid file type" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Invalid file type" },
+        { status: 400, headers: corsHeaders }
+      );
     }
 
     const buffer = Buffer.from(await file.arrayBuffer());
@@ -49,16 +68,19 @@ export async function POST(req: Request) {
 
     client.close();
 
-    return NextResponse.json({
-      success: true,
-      file: fileName,
-      url: `https://boldbrand.io/uploads/${fileName}`,
-    });
+    return NextResponse.json(
+      {
+        success: true,
+        file: fileName,
+        url: `https://boldbrand.io/uploads/${fileName}`,
+      },
+      { headers: corsHeaders }
+    );
 
   } catch (error: any) {
     return NextResponse.json(
       { error: error.message },
-      { status: 500 }
+      { status: 500, headers: corsHeaders }
     );
   }
 }
