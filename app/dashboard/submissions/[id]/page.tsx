@@ -1,9 +1,15 @@
 export const dynamic = "force-dynamic";
 
-export default async function SubmissionPage({ params }: any) {
+type PageProps = {
+  params: Promise<{ id: string }>;
+};
+
+export default async function SubmissionPage({ params }: PageProps) {
+  const { id } = await params;
+
   return (
     <div>
-      ID IS: {params.id}
+      ID IS: {id}
     </div>
   );
 }
