@@ -103,7 +103,7 @@ export default async function SubmissionPage({ params }: PageProps) {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {form.files.map((f: string, i: number) => {
-                const fileUrl = `/uploads/${f}`;
+                const fileUrl = `https://boldbrand.io/uploads/${f}`;
                 const fileName = f.split("/").pop();
                 const isImage = /\.(jpg|jpeg|png|webp|gif)$/i.test(f);
 
@@ -134,19 +134,7 @@ export default async function SubmissionPage({ params }: PageProps) {
                     </a>
                   </div>
                 );
-              })}
-            </div>
-          </div>
-        )}
-
-        <div className="pt-6 border-t text-xs text-gray-400">
-          Created at: {new Date(data.created_at).toLocaleString()}
-        </div>
-
-      </div>
-    </div>
-  );
-}
+              }
 
 function Info({ label, value }: { label: string; value?: string }) {
   return (

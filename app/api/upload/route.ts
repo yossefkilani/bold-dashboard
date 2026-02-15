@@ -4,6 +4,8 @@ import { Readable } from "stream";
 
 export const runtime = "nodejs";
 
+const MAX_SIZE = 5 * 1024 * 1024; // 5MB
+
 export async function POST(req: Request) {
   try {
     const formData = await req.formData();
@@ -13,8 +15,18 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
     }
 
+    if (file.size > MAX_SIZE) {
+      return NextResponse.json({ error: "File too large" }, { status: 400 });
+    }
+
+    const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+
+    if (!allowedTypes.includes(file.type)) {
+      return NextResponse.json({ error: "Invalid file type" }, { status: 400 });
+    }
+
     const buffer = Buffer.from(await file.arrayBuffer());
-    const fileName = `${Date.now()}-${file.name}`;
+    const fileName = `${Date.now()}-${file.name.replace(/\s/g, "_")}`;
 
     const client = new Client();
 
