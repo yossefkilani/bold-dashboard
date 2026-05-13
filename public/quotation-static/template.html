@@ -2,27 +2,76 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BOLD – Quotation</title>
-
-  <!-- STYLES -->
   <link rel="stylesheet" href="./style.css">
 
-  <!-- RENDER ENGINE -->
+  <!-- PDF libs (loaded only when Share PDF is clicked) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
   <script defer src="./render.js"></script>
 </head>
 <body>
 
-  <!-- PDF CANVAS -->
-  <div class="pdf-canvas" id="pdf-root">
-    <!-- Pages will be injected by render.js -->
-  </div>
+  <div class="pdf-canvas" id="pdf-root"></div>
 
-  <!-- SCREEN ACTIONS -->
   <div class="actions">
-    <button onclick="window.print()">
-      Generate PDF
+    <button class="btn-outline" onclick="window.print()">
+      Download PDF
+    </button>
+    <button class="btn-black" id="share-btn" onclick="sharePDF()">
+      Share PDF
     </button>
   </div>
+
+  <script>
+    async function sharePDF() {
+      const btn = document.getElementById("share-btn");
+      btn.textContent = "Preparing…";
+      btn.disabled = true;
+
+      try {
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF("p", "mm", "a4");
+        const pages = document.querySelectorAll(".a4-page");
+
+        for (let i = 0; i < pages.length; i++) {
+          const canvas = await html2canvas(pages[i], {
+            scale: 2,
+            useCORS: true,
+            backgroundColor: "#ffffff",
+          });
+          const imgData = canvas.toDataURL("image/jpeg", 0.92);
+          if (i > 0) pdf.addPage();
+          pdf.addImage(imgData, "JPEG", 0, 0, 210, 297);
+        }
+
+        const params = new URLSearchParams(window.location.search);
+        const clientName = params.get("client") || "Client";
+        const fileName = `BOLD-Quotation-${clientName}.pdf`;
+        const pdfBlob = pdf.output("blob");
+        const pdfFile = new File([pdfBlob], fileName, { type: "application/pdf" });
+
+        if (navigator.canShare && navigator.canShare({ files: [pdfFile] })) {
+          await navigator.share({ files: [pdfFile], title: "BOLD – Quotation" });
+        } else {
+          // fallback: direct download
+          const url = URL.createObjectURL(pdfBlob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = fileName;
+          a.click();
+          URL.revokeObjectURL(url);
+        }
+      } catch (e) {
+        if (e.name !== "AbortError") alert("Could not share PDF. Try Download PDF instead.");
+      } finally {
+        btn.textContent = "Share PDF";
+        btn.disabled = false;
+      }
+    }
+  </script>
 
 </body>
 </html>

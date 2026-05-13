@@ -4,7 +4,7 @@ export function middleware(req: NextRequest) {
   const session = req.cookies.get("session")?.value;
   const { pathname } = req.nextUrl;
 
-  if (pathname.startsWith("/api/") || pathname === "/login") {
+  if (pathname.startsWith("/api/") || pathname === "/login" || pathname.startsWith("/q/")) {
     return NextResponse.next();
   }
 
