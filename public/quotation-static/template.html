@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>BOLD – Quotation</title>
+
+  <!-- STYLES -->
+  <link rel="stylesheet" href="./style.css">
+
+  <!-- RENDER ENGINE -->
+  <script defer src="./render.js"></script>
+</head>
+<body>
+
+  <!-- PDF CANVAS -->
+  <div class="pdf-canvas" id="pdf-root">
+    <!-- Pages will be injected by render.js -->
+  </div>
+
+  <!-- SCREEN ACTIONS -->
+  <div class="actions">
+    <button onclick="window.print()">
+      Generate PDF
+    </button>
+  </div>
+
+</body>
+</html>

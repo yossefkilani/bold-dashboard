@@ -1,0 +1,283 @@
+/* ======================
+   PAGE + PRINT SETUP
+====================== */
+
+@page {
+  size: A4;
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #fff;
+  font-family: "Gotham", Helvetica Neue LT Arabic, Arial, sans-serif;
+  font-size: 10.5pt;
+  color: #111;
+}
+
+/* ======================
+   SCREEN PREVIEW
+====================== */
+
+.pdf-canvas {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;   /* ⬅️ هذا المهم */
+  align-items: center;
+  padding: 40px 0;
+  background: #f0f0f0;
+}
+
+/* ======================
+   A4 PAGE
+====================== */
+
+.a4-page {
+  width: 210mm;
+  height: 297mm;
+  background: #fff;
+
+  position: relative;
+  overflow: hidden;
+
+  page-break-after: always;
+  break-after: page;
+}
+
+
+/* ======================
+   HEADER
+====================== */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 18mm;
+}
+
+.ar {
+  font-size: 12.25pt;
+  font-weight: 600;
+}
+
+.en {
+  font-size: 10.5pt;
+  font-weight: 500;
+}
+
+.logo img {
+  width: 50px;
+  height: auto;
+  display: block;
+}
+
+/* ======================
+   TITLE
+====================== */
+
+.title {
+  margin-bottom: 22mm;
+}
+
+.quotation-title {
+  font-size: 16pt;
+  font-weight: 700;
+  margin: 0 0 8mm 0;
+}
+
+.meta-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6mm;
+}
+
+.meta-left,
+.meta-right {
+  font-size: 10.5pt;
+  line-height: 1.6;
+}
+
+.meta-right {
+  text-align: left;
+}
+
+.divider {
+  width: 28mm;
+  height: 3px;
+  background: #000;
+  margin-top: 6mm;
+}
+
+/* ======================
+   TABLE
+====================== */
+
+
+
+.table-header,
+.table-row {
+  display: grid;
+  grid-template-columns: 140px 1fr 90px;
+}
+
+.table-header {
+  font-size: 9.5pt;
+  color: #777;
+  border-bottom: 1px solid #bfbfbf;
+  padding-bottom: 6mm;
+}
+
+.table-row {
+  padding: 8mm 0;
+}
+
+.table-row + .table-row {
+  border-top: 1px solid #e3e3e3;
+}
+
+.table-header div:nth-child(2),
+.table-row div:nth-child(2) {
+  padding-left: 10mm;
+}
+
+.table-row div {
+  line-height: 1.8;
+}
+.table-row {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+/* ======================
+   TOTAL
+====================== */
+
+.total {
+  margin-top: 16mm;
+  margin-bottom: 28mm;
+  font-size: 11pt;
+  font-weight: 700;
+  display: grid;
+  grid-template-columns: 1fr 100px;
+  border-top: 1px solid #bfbfbf;
+  border-bottom: 1px solid #bfbfbf;
+  padding: 4mm 0;
+}
+
+/* ======================
+   LAYOUT SYSTEM
+====================== */
+
+.a4-content {
+  padding: 20mm;
+  padding-bottom: 40mm; /* ⬅️ مساحة محجوزة للفوتر */
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.table {
+  flex: 1;
+  overflow: hidden;
+}
+
+.safe-area {
+  height: 25mm;
+  flex-shrink: 0;
+}
+/* ======================
+   FOOTER
+====================== */
+
+.page-footer {
+  position: absolute;
+  bottom: 15mm;
+  left: 0;
+  width: 100%;
+
+  font-size: 9pt;
+  color: #777;
+  text-align: center;
+}
+
+/* ======================
+   BANK PAGE
+====================== */
+
+.bank-page {
+  display: none;
+}
+
+.bank-title {
+  font-size: 14pt;
+  font-weight: 700;
+  margin-bottom: 5mm;
+}
+
+.bank-details {
+  margin-top: 12mm;
+}
+
+.bank-item {
+  margin-bottom: 8mm;
+}
+
+.bank-item .label {
+  display: block;
+  font-size: 9.5pt;
+  color: #777;
+  margin-bottom: 2mm;
+}
+
+.bank-item .value {
+  display: block;
+  font-size: 11pt;
+  color: #111;
+}
+
+.bank-divider {
+  width: 20mm;
+  height: 3px;
+  background: #000;
+  margin: 2mm 0 16mm 0;
+}
+
+/* ======================
+   ACTIONS (SCREEN ONLY)
+====================== */
+
+.actions {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-top: 1px solid #ddd;
+  padding: 14px;
+  display: flex;
+  gap: 12px;
+}
+
+/* ======================
+   PRINT
+====================== */
+
+@media print {
+  body {
+    background: #fff;
+  }
+
+  .pdf-canvas {
+    padding: 0;
+    background: #fff;
+  }
+
+  .actions {
+    display: none;
+  }
+}
