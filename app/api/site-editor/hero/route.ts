@@ -2,11 +2,10 @@ export const runtime = "nodejs";
 
 import { NextResponse } from "next/server";
 import { openDB } from "@/lib/db";
-import path from "path";
-import fs from "fs/promises";
+import { uploadViaFTP, deleteViaFTP } from "@/lib/ftp";
 
-const UPLOAD_DIR = path.join(process.cwd(), "public", "uploads", "hero");
-const PUBLIC_BASE = "/uploads/hero";
+const FTP_DIR = "/public_html/uploads/hero";
+const PUBLIC_BASE = "https://boldbrand.io/uploads/hero";
 
 /* ===================== GET ===================== */
 export async function GET() {
@@ -25,8 +24,6 @@ export async function GET() {
 /* ===================== POST — upload images ===================== */
 export async function POST(req: Request) {
   try {
-    await fs.mkdir(UPLOAD_DIR, { recursive: true });
-
     const formData = await req.formData();
     const files = formData.getAll("files") as File[];
     const uploaded: string[] = [];
@@ -35,7 +32,7 @@ export async function POST(req: Request) {
       if (!file || typeof file === "string") continue;
       const safeName = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g, "")}`;
       const buffer = Buffer.from(await file.arrayBuffer());
-      await fs.writeFile(path.join(UPLOAD_DIR, safeName), buffer);
+      await uploadViaFTP(buffer, `${FTP_DIR}/${safeName}`);
       uploaded.push(`${PUBLIC_BASE}/${safeName}`);
     }
 
@@ -70,13 +67,9 @@ export async function DELETE(req: Request) {
   try {
     const { url } = await req.json();
     const filename = url.split("/").pop();
-
     if (filename) {
-      try {
-        await fs.unlink(path.join(UPLOAD_DIR, filename));
-      } catch {}
+      await deleteViaFTP(`${FTP_DIR}/${filename}`);
     }
-
     return NextResponse.json({ success: true });
   } catch {
     return NextResponse.json({ error: "Delete failed" }, { status: 500 });

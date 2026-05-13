@@ -1,15 +1,13 @@
 export const runtime = "nodejs";
 
 import { NextResponse } from "next/server";
-import path from "path";
-import fs from "fs/promises";
+import { uploadViaFTP } from "@/lib/ftp";
 
-const UPLOAD_DIR = path.join(process.cwd(), "public", "uploads", "cases");
+const FTP_DIR = "/public_html/uploads/cases";
+const PUBLIC_BASE = "https://boldbrand.io/uploads/cases";
 
 export async function POST(req: Request) {
   try {
-    await fs.mkdir(UPLOAD_DIR, { recursive: true });
-
     const formData = await req.formData();
     const file = formData.get("file") as File;
 
@@ -17,10 +15,11 @@ export async function POST(req: Request) {
 
     const safeName = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g, "")}`;
     const buffer = Buffer.from(await file.arrayBuffer());
-    await fs.writeFile(path.join(UPLOAD_DIR, safeName), buffer);
+    await uploadViaFTP(buffer, `${FTP_DIR}/${safeName}`);
 
-    return NextResponse.json({ url: `/uploads/cases/${safeName}`, filename: safeName });
+    return NextResponse.json({ url: `${PUBLIC_BASE}/${safeName}` });
   } catch (err) {
+    console.error("CASE UPLOAD ERROR:", err);
     return NextResponse.json({ error: "Upload failed" }, { status: 500 });
   }
 }

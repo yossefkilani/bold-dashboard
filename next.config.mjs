@@ -1,12 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "standalone",
   experimental: {
     serverComponentsExternalPackages: ["mysql2", "basic-ftp"],
   },
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "boldbrand.io" },
+      { protocol: "https", hostname: "**.hstgr.io" },
     ],
   },
 };
