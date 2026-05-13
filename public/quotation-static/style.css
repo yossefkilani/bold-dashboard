@@ -161,6 +161,7 @@ body {
 .table-row {
   padding: 6mm 0;
   font-size: 8.5pt;
+  align-items: center;
 }
 
 .table-row + .table-row {
