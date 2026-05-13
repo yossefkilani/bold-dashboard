@@ -1,4 +1,39 @@
 /* ======================
+   FONTS
+====================== */
+
+@font-face {
+  font-family: "HelveticaAr";
+  src: url("/fonts/helvetica-ar/HelveticaNeueLTArabic-Roman.woff2") format("woff2");
+  font-weight: 400;
+}
+@font-face {
+  font-family: "HelveticaAr";
+  src: url("/fonts/helvetica-ar/HelveticaNeueLTArabic-Bold.woff2") format("woff2");
+  font-weight: 700;
+}
+@font-face {
+  font-family: "HelveticaAr";
+  src: url("/fonts/helvetica-ar/HelveticaNeueLTArabic-Light.woff2") format("woff2");
+  font-weight: 300;
+}
+@font-face {
+  font-family: "Gotham";
+  src: url("/fonts/gotham/Gotham-Book.woff2") format("woff2");
+  font-weight: 400;
+}
+@font-face {
+  font-family: "Gotham";
+  src: url("/fonts/gotham/Gotham-Bold.woff2") format("woff2");
+  font-weight: 700;
+}
+@font-face {
+  font-family: "Gotham";
+  src: url("/fonts/gotham/Gotham-Medium.woff2") format("woff2");
+  font-weight: 500;
+}
+
+/* ======================
    PAGE + PRINT SETUP
 ====================== */
 
@@ -7,15 +42,13 @@
   margin: 0;
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
   background: #fff;
-  font-family: "Gotham", Helvetica Neue LT Arabic, Arial, sans-serif;
-  font-size: 10.5pt;
+  font-family: "Gotham", "HelveticaAr", Arial, sans-serif;
+  font-size: 9.5pt;
   color: #111;
 }
 
@@ -27,9 +60,9 @@ body {
   min-height: 100vh;
   width: 100%;
   display: flex;
-  flex-direction: column;   /* ⬅️ هذا المهم */
+  flex-direction: column;
   align-items: center;
-  padding: 40px 0;
+  padding: 40px 0 120px;
   background: #f0f0f0;
 }
 
@@ -41,14 +74,11 @@ body {
   width: 210mm;
   height: 297mm;
   background: #fff;
-
   position: relative;
   overflow: hidden;
-
   page-break-after: always;
   break-after: page;
 }
-
 
 /* ======================
    HEADER
@@ -58,21 +88,22 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 18mm;
+  margin-bottom: 14mm;
 }
 
 .ar {
-  font-size: 12.25pt;
-  font-weight: 600;
+  font-family: "HelveticaAr", Arial, sans-serif;
+  font-size: 11pt;
+  font-weight: 700;
 }
 
 .en {
-  font-size: 10.5pt;
+  font-size: 9pt;
   font-weight: 500;
 }
 
 .logo img {
-  width: 50px;
+  width: 46px;
   height: auto;
   display: block;
 }
@@ -81,60 +112,55 @@ body {
    TITLE
 ====================== */
 
-.title {
-  margin-bottom: 22mm;
-}
+.title { margin-bottom: 16mm; }
 
 .quotation-title {
-  font-size: 16pt;
+  font-size: 15pt;
   font-weight: 700;
-  margin: 0 0 8mm 0;
+  margin: 0 0 7mm 0;
+  letter-spacing: 0.5px;
 }
 
 .meta-row {
   display: flex;
   justify-content: space-between;
-  margin-top: 6mm;
+  margin-top: 5mm;
 }
 
 .meta-left,
 .meta-right {
-  font-size: 10.5pt;
-  line-height: 1.6;
-}
-
-.meta-right {
-  text-align: left;
+  font-size: 9.5pt;
+  line-height: 1.7;
 }
 
 .divider {
-  width: 28mm;
+  width: 24mm;
   height: 3px;
   background: #000;
-  margin-top: 6mm;
+  margin-top: 5mm;
 }
 
 /* ======================
    TABLE
 ====================== */
 
-
-
 .table-header,
 .table-row {
   display: grid;
-  grid-template-columns: 140px 1fr 90px;
+  grid-template-columns: 130px 1fr 80px;
 }
 
 .table-header {
-  font-size: 9.5pt;
-  color: #777;
+  font-size: 9pt;
+  font-weight: 600;
+  color: #555;
   border-bottom: 1px solid #bfbfbf;
-  padding-bottom: 6mm;
+  padding-bottom: 5mm;
 }
 
 .table-row {
-  padding: 8mm 0;
+  padding: 6mm 0;
+  font-size: 8.5pt;
 }
 
 .table-row + .table-row {
@@ -143,15 +169,34 @@ body {
 
 .table-header div:nth-child(2),
 .table-row div:nth-child(2) {
-  padding-left: 10mm;
+  padding-left: 8mm;
 }
 
 .table-row div {
-  line-height: 1.8;
+  line-height: 1.85;
 }
+
 .table-row {
   break-inside: avoid;
   page-break-inside: avoid;
+}
+
+.phase-scope {
+  font-size: 8.5pt;
+  font-weight: 600;
+  color: #111;
+}
+
+.desc-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.desc-list li {
+  font-size: 8.5pt;
+  line-height: 1.85;
+  color: #222;
 }
 
 /* ======================
@@ -159,9 +204,9 @@ body {
 ====================== */
 
 .total {
-  margin-top: 16mm;
-  margin-bottom: 28mm;
-  font-size: 11pt;
+  margin-top: 12mm;
+  margin-bottom: 10mm;
+  font-size: 10.5pt;
   font-weight: 700;
   display: grid;
   grid-template-columns: 1fr 100px;
@@ -171,84 +216,114 @@ body {
 }
 
 /* ======================
-   LAYOUT SYSTEM
+   LAYOUT
 ====================== */
 
 .a4-content {
   padding: 20mm;
-  padding-bottom: 40mm; /* ⬅️ مساحة محجوزة للفوتر */
+  padding-bottom: 40mm;
   height: 100%;
   box-sizing: border-box;
 }
 
-.table {
-  flex: 1;
-  overflow: hidden;
-}
+.table { flex: 1; overflow: hidden; }
+.safe-area { height: 20mm; flex-shrink: 0; }
 
-.safe-area {
-  height: 25mm;
-  flex-shrink: 0;
-}
 /* ======================
-   FOOTER
+   FOOTER / TERMS
 ====================== */
 
-.page-footer {
-  position: absolute;
-  bottom: 15mm;
-  left: 0;
-  width: 100%;
+.footer {
+  font-size: 7.5pt;
+  line-height: 1.9;
+  color: #333;
+  margin-top: 6mm;
+}
 
-  font-size: 9pt;
-  color: #777;
-  text-align: center;
+.footer-ar {
+  font-family: "HelveticaAr", Arial, sans-serif;
+  font-size: 7.5pt;
+  line-height: 2;
+  direction: rtl;
+  text-align: right;
+  color: #333;
+  margin-top: 6mm;
+}
+
+.footer-title {
+  font-weight: 700;
+  font-size: 8.5pt;
+  margin-bottom: 3mm;
+  display: block;
+}
+
+.terms-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: terms-counter;
+}
+
+.terms-list li {
+  counter-increment: terms-counter;
+  margin-bottom: 2mm;
+  padding-right: 5mm;
+  position: relative;
+}
+
+.terms-list li::before {
+  content: counter(terms-counter) ".";
+  position: absolute;
+  right: 0;
+  font-weight: 600;
+}
+
+.terms-list-en {
+  margin: 0;
+  padding-left: 14px;
+  list-style: decimal;
+}
+
+.terms-list-en li {
+  margin-bottom: 2mm;
 }
 
 /* ======================
    BANK PAGE
 ====================== */
 
-.bank-page {
-  display: none;
-}
-
 .bank-title {
-  font-size: 14pt;
+  font-size: 13pt;
   font-weight: 700;
-  margin-bottom: 5mm;
+  margin-bottom: 4mm;
 }
 
-.bank-details {
-  margin-top: 12mm;
-}
+.bank-details { margin-top: 10mm; }
 
-.bank-item {
-  margin-bottom: 8mm;
-}
+.bank-item { margin-bottom: 7mm; }
 
 .bank-item .label {
   display: block;
-  font-size: 9.5pt;
+  font-size: 8.5pt;
   color: #777;
-  margin-bottom: 2mm;
+  margin-bottom: 1.5mm;
 }
 
 .bank-item .value {
   display: block;
-  font-size: 11pt;
+  font-size: 10pt;
   color: #111;
 }
 
 .bank-divider {
-  width: 20mm;
+  width: 18mm;
   height: 3px;
   background: #000;
-  margin: 2mm 0 16mm 0;
+  margin: 2mm 0 14mm 0;
 }
 
 /* ======================
-   ACTIONS (SCREEN ONLY)
+   ACTIONS (screen only)
 ====================== */
 
 .actions {
@@ -297,16 +372,7 @@ body {
 ====================== */
 
 @media print {
-  body {
-    background: #fff;
-  }
-
-  .pdf-canvas {
-    padding: 0;
-    background: #fff;
-  }
-
-  .actions {
-    display: none;
-  }
+  body { background: #fff; }
+  .pdf-canvas { padding: 0; background: #fff; }
+  .actions { display: none; }
 }

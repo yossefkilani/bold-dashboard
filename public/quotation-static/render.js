@@ -107,9 +107,18 @@ function createPage(pagePhases, pageIndex, isLast) {
     const row = document.createElement("div");
     row.className = "table-row";
     const days = Number(p.timeline);
+
+    // Build numbered list from desc lines
+    const lines = (p.desc || "").split("\n").map(l => l.trim()).filter(Boolean);
+    const listItems = lines.map((line, idx) => {
+      // Strip existing leading number prefix (e.g. "1-", "1.", "1)")
+      const clean = line.replace(/^[\d]+\s*[-.)]\s*/, "");
+      return `<li><span style="margin-right:5px;font-weight:600">${idx + 1}.</span>${clean}</li>`;
+    }).join("");
+
     row.innerHTML = `
-      <div>${p.title || ""}</div>
-      <div>${(p.desc || "").replace(/\n/g, "<br>")}</div>
+      <div class="phase-scope">${p.title || ""}</div>
+      <div><ul class="desc-list">${listItems}</ul></div>
       <div style="text-align:right">${days > 0 ? `${days} ${days === 1 ? "Day" : "Days"}` : ""}</div>
     `;
     table.appendChild(row);
@@ -124,16 +133,24 @@ function createPage(pagePhases, pageIndex, isLast) {
     `;
 
     const isArabic = /[؀-ۿ]/.test(terms);
+    const termLines = terms.split("\n").map(l => l.trim()).filter(Boolean);
 
     const footer = document.createElement("footer");
-    footer.className = "footer";
-    footer.setAttribute("dir", isArabic ? "rtl" : "ltr");
-    footer.style.textAlign = isArabic ? "right" : "left";
-    footer.style.fontFamily = isArabic ? "Arial, sans-serif" : "inherit";
-    footer.innerHTML = `
-      <strong>${isArabic ? "الشروط والأحكام" : "PAYMENT TERMS"}</strong><br><br>
-      ${terms.replace(/\n/g, "<br>")}
-    `;
+    footer.className = isArabic ? "footer-ar" : "footer";
+
+    if (isArabic) {
+      const items = termLines.map(l => `<li>${l.replace(/^[\d]+\s*[-.)]\s*/, "")}</li>`).join("");
+      footer.innerHTML = `
+        <span class="footer-title">الشروط والأحكام:</span>
+        <ul class="terms-list">${items}</ul>
+      `;
+    } else {
+      const items = termLines.map(l => `<li>${l.replace(/^[\d]+\s*[-.)]\s*/, "")}</li>`).join("");
+      footer.innerHTML = `
+        <span class="footer-title">PAYMENT TERMS</span>
+        <ol class="terms-list-en">${items}</ol>
+      `;
+    }
 
     content.insertBefore(totalEl, content.querySelector(".safe-area"));
     content.insertBefore(footer, content.querySelector(".safe-area"));
