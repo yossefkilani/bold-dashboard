@@ -23,68 +23,66 @@ Any additional required direct or indirect jobs will be subject to a specified q
 const TERMS_50 = `50% advance payment and 50% on completion.
 Any additional required direct or indirect jobs will be subject to a specified quotation shared with you at the time of request.`;
 
+const VI = `Logo Design
+Visual Identity
+1- Color Palette
+2- Typography`;
+
 const SECTOR_TEMPLATES: Record<string, Template> = {
+
+  // ─── FOOD & BEVERAGE ───────────────────────────────────────────────
   "coffee-shop": {
-    label: "Coffee Shop Branding",
+    label: "Coffee Shop",
     total: "800",
     currency: "KWD",
     terms: TERMS_50,
     phases: [
       {
         title: "Logo Design & Visual Identity",
-        desc: `Logo Design
-Visual Identity
-1- Color Palette
-2- Brand Style (Theme)
-3- Typography`,
+        desc: VI,
         timeline: "14",
       },
       {
         title: "Packaging Design",
-        desc: `Coffee Cups - Hot Beverages
-Cups - Cold Beverages
+        desc: `Hot Beverage Cups
+Cold Beverage Cups
 Ice Cream Cup
-Pastry Box
 Sweet Box
+Pastry Box
 Wax Paper
-Cups Holder
-Sandwiches Bag
-Delivery Bags S/M/L
-Uniform - Apron / T-shirt`,
+Cup Holder
+Sandwich Bag
+Delivery Bags S / M / L
+Uniform — Apron & T-shirt`,
         timeline: "14",
       },
     ],
   },
 
   "cafe-resto": {
-    label: "Cafe & Restaurant Branding",
+    label: "Cafe & Restaurant",
     total: "950",
     currency: "KWD",
     terms: TERMS_50,
     phases: [
       {
         title: "Logo Design & Visual Identity",
-        desc: `Logo Design
-Visual Identity
-1- Color Palette
-2- Brand Style (Theme)
-3- Typography
-Basic Brand Guidelines`,
+        desc: VI,
         timeline: "14",
       },
       {
         title: "Packaging & Print Design",
         desc: `Burger Box
 Fries Tray
-Coffee Cups - Hot Beverages
-Cups - Cold Beverages
+Hot Beverage Cups
+Cold Beverage Cups
 Ice Cream Cup
 Pastry Box
-Sandwiches Bag
-Delivery Bags S/M/L
+Sandwich Bag
+Delivery Bags S / M / L
 Wax Paper
-Cups Holder
-Uniform - Apron / T-shirt
+Cup Holder
+Uniform — Apron & T-shirt
 Delivery Car Wrap`,
         timeline: "14",
       },
@@ -92,31 +90,54 @@ Delivery Car Wrap`,
   },
 
   "bakery": {
-    label: "Bakery / Sweet Shop Branding",
+    label: "Bakery",
     total: "450",
     currency: "KWD",
     terms: TERMS_100,
     phases: [
       {
         title: "Logo Design & Visual Identity",
-        desc: `Logo Design
-Visual Identity
-1- Color Palette
-2- Fonts Selection`,
+        desc: VI,
         timeline: "14",
       },
       {
         title: "Packaging Design",
         desc: `Box Design
 Cup Design
-Box with Plate
-Paper Bag Design`,
-        timeline: "7",
+Paper Bag
+Wax Paper
+Sticker Design`,
+        timeline: "10",
       },
     ],
   },
 
-  "sweet-brand": {
+  "burger-restaurant": {
+    label: "Burger Restaurant",
+    total: "750",
+    currency: "KWD",
+    terms: TERMS_50,
+    phases: [
+      {
+        title: "Logo Design & Visual Identity",
+        desc: VI,
+        timeline: "14",
+      },
+      {
+        title: "Packaging Design",
+        desc: `Burger Box
+Fries Box / Tray
+Cold Beverage Cups
+Sandwich Bag
+Delivery Bags S / M / L
+Wax Paper
+Uniform — Apron & T-shirt`,
+        timeline: "14",
+      },
+    ],
+  },
+
+  "sweet-candy": {
     label: "Sweet / Candy Brand",
     total: "350",
     currency: "KWD",
@@ -124,23 +145,46 @@ Paper Bag Design`,
     phases: [
       {
         title: "Logo Design & Visual Identity",
-        desc: `Logo Design
-Visual Identity
-1- Color Palette
-2- Fonts Selection`,
+        desc: VI,
         timeline: "14",
       },
       {
         title: "Packaging Design",
-        desc: `Cup Design
-Box Design
+        desc: `Box Design
 Box with Plate
+Cup Design
 Bag Design`,
         timeline: "7",
       },
     ],
   },
 
+  "catering": {
+    label: "Catering Brand",
+    total: "700",
+    currency: "KWD",
+    terms: TERMS_50,
+    phases: [
+      {
+        title: "Logo Design & Visual Identity",
+        desc: VI,
+        timeline: "14",
+      },
+      {
+        title: "Packaging & Print Design",
+        desc: `Hot Meal Box
+Cold Meal Box
+Cutlery Kit
+Bag Design S / M / L
+Wax Paper
+Uniform Design
+Delivery Car Wrap`,
+        timeline: "14",
+      },
+    ],
+  },
+
+  // ─── FASHION & LIFESTYLE ──────────────────────────────────────────
   "clothing-brand": {
     label: "Clothing Brand",
     total: "450",
@@ -149,10 +193,7 @@ Bag Design`,
     phases: [
       {
         title: "Logo Design & Visual Identity",
-        desc: `Logo Design
-Visual Identity
-1- Color Palette
-2- Fonts Selection`,
+        desc: VI,
         timeline: "14",
       },
       {
@@ -168,22 +209,19 @@ Tag Design`,
   },
 
   "abaya-brand": {
-    label: "Abaya / Fashion Brand",
+    label: "Abaya / Modest Fashion",
     total: "450",
     currency: "KWD",
     terms: TERMS_100,
     phases: [
       {
         title: "Name Creation",
-        desc: `Brand Name Creation (Arabic & English)`,
+        desc: `Brand Name (Arabic & English)`,
         timeline: "5",
       },
       {
         title: "Logo Design & Visual Identity",
-        desc: `Logo Design
-Visual Identity
-1- Color Palette
-2- Fonts Selection`,
+        desc: VI,
         timeline: "14",
       },
       {
@@ -205,10 +243,7 @@ Card Design`,
     phases: [
       {
         title: "Logo Design & Visual Identity",
-        desc: `Logo Design
-Visual Identity
-1- Color Palette
-2- Fonts Selection`,
+        desc: VI,
         timeline: "14",
       },
       {
@@ -223,24 +258,21 @@ Bag Design`,
   },
 
   "perfume-brand": {
-    label: "Perfume Brand",
+    label: "Perfume / Fragrance Brand",
     total: "450",
     currency: "KWD",
     terms: TERMS_100,
     phases: [
       {
         title: "Logo Design & Visual Identity",
-        desc: `Logo Design
-Visual Identity
-1- Color Palette
-2- Fonts Selection`,
+        desc: VI,
         timeline: "14",
       },
       {
         title: "Packaging Design",
-        desc: `Perfume Box Design
+        desc: `Perfume Box
 Spray Box
-Set Box Design
+Set Box
 Bag Design
 Sticker Design`,
         timeline: "14",
@@ -256,10 +288,7 @@ Sticker Design`,
     phases: [
       {
         title: "Logo Design & Visual Identity",
-        desc: `Logo Design
-Visual Identity
-1- Color Palette
-2- Fonts Selection`,
+        desc: VI,
         timeline: "14",
       },
       {
@@ -273,8 +302,56 @@ Bag Design`,
     ],
   },
 
+  "salon-beauty": {
+    label: "Salon / Beauty Brand",
+    total: "500",
+    currency: "KWD",
+    terms: TERMS_100,
+    phases: [
+      {
+        title: "Logo Design & Visual Identity",
+        desc: VI,
+        timeline: "14",
+      },
+      {
+        title: "Stationery & Packaging",
+        desc: `Business Card
+Gift Card
+Product Label Design
+Paper Bag
+Wax Paper
+Uniform Design`,
+        timeline: "10",
+      },
+    ],
+  },
+
+  "flowers-brand": {
+    label: "Flowers / Gift Brand",
+    total: "400",
+    currency: "KWD",
+    terms: TERMS_100,
+    phases: [
+      {
+        title: "Logo Design & Visual Identity",
+        desc: VI,
+        timeline: "14",
+      },
+      {
+        title: "Packaging Design",
+        desc: `Box Design
+Wrapping Paper
+Ribbon Tag
+Bag Design
+Sticker Design`,
+        timeline: "7",
+      },
+    ],
+  },
+
+  // ─── BUSINESS & CORPORATE ─────────────────────────────────────────
   "real-estate": {
-    label: "Real Estate / Corporate Branding",
+    label: "Real Estate / Corporate",
     total: "900",
     currency: "KWD",
     terms: TERMS_100,
@@ -284,21 +361,18 @@ Bag Design`,
         desc: `Logo Design
 Visual Identity
 1- Color Palette
-2- Fonts Selection (Arabic & English)`,
+2- Typography (Arabic & English)`,
         timeline: "14",
       },
       {
-        title: "Stationery & Digital Collaterals",
+        title: "Stationery & Collaterals",
         desc: `Business Card
 Letterhead
 DL Envelope
 A4 Envelope
-Notebook
-Folder
-Email Signature
-Website Design (Landing Page - Visual Layout)
-Presentation Template (5 slides)
-Social Media Template (Feed & Story)`,
+Notebook Cover
+Folder Design
+Email Signature`,
         timeline: "14",
       },
       {
@@ -310,7 +384,7 @@ Social Media Template (Feed & Story)`,
   },
 
   "clinic-medical": {
-    label: "Clinic / Medical Branding",
+    label: "Clinic / Medical",
     total: "600",
     currency: "KWD",
     terms: TERMS_100,
@@ -320,7 +394,7 @@ Social Media Template (Feed & Story)`,
         desc: `Logo Design
 Visual Identity
 1- Color Palette
-2- Fonts Selection (Arabic & English)`,
+2- Typography (Arabic & English)`,
         timeline: "14",
       },
       {
@@ -329,31 +403,82 @@ Visual Identity
 Letterhead
 Prescription Pad
 Appointment Card
-Staff Uniform Design`,
+Uniform Design`,
         timeline: "10",
       },
     ],
   },
 
-  "social-media": {
-    label: "Social Media Management",
-    total: "450",
+  "laundry-tailor": {
+    label: "Laundry / Tailoring",
+    total: "400",
     currency: "KWD",
-    terms: `Payment in advance at the beginning of each month.
-In case either party wishes to cancel the contract, the other party must be notified one month in advance.`,
+    terms: TERMS_100,
     phases: [
       {
-        title: "Monthly Social Media Package",
-        desc: `Social Media Account Management
-Post Scheduling
-9 Post Designs
-Story Designs (aligned with local & global occasions)
-12 Videos/Month (2 photography sessions)`,
-        timeline: "30",
+        title: "Logo Design & Visual Identity",
+        desc: VI,
+        timeline: "14",
+      },
+      {
+        title: "Print & Packaging",
+        desc: `Garment Bag Design
+Tag Design
+Sticker Design
+Business Card
+Uniform Design`,
+        timeline: "7",
       },
     ],
   },
 
+  "car-services": {
+    label: "Car Services / Auto",
+    total: "500",
+    currency: "KWD",
+    terms: TERMS_100,
+    phases: [
+      {
+        title: "Logo Design & Visual Identity",
+        desc: VI,
+        timeline: "14",
+      },
+      {
+        title: "Stationery & Vehicle Branding",
+        desc: `Business Card
+Letterhead
+Invoice Design
+Car Wrap Design
+Uniform Design`,
+        timeline: "10",
+      },
+    ],
+  },
+
+  "sports-brand": {
+    label: "Sports / Activewear Brand",
+    total: "500",
+    currency: "KWD",
+    terms: TERMS_100,
+    phases: [
+      {
+        title: "Logo Design & Visual Identity",
+        desc: VI,
+        timeline: "14",
+      },
+      {
+        title: "Packaging & Apparel Design",
+        desc: `Box Design
+Paper Bag
+Tag Design
+Sticker Design
+Jersey / Uniform Design`,
+        timeline: "10",
+      },
+    ],
+  },
+
+  // ─── BRANDING PACKAGES ────────────────────────────────────────────
   "basic-branding": {
     label: "Basic Branding Package",
     total: "300",
@@ -362,10 +487,7 @@ Story Designs (aligned with local & global occasions)
     phases: [
       {
         title: "Logo Design & Visual Identity",
-        desc: `Logo Design
-Visual Identity
-1- Color Palette
-2- Fonts Selection`,
+        desc: VI,
         timeline: "14",
       },
     ],
@@ -379,15 +501,11 @@ Visual Identity
     phases: [
       {
         title: "Logo Design & Visual Identity",
-        desc: `Logo Design
-Visual Identity
-1- Color Palette
-2- Brand Style (Theme)
-3- Typography`,
+        desc: VI,
         timeline: "14",
       },
       {
-        title: "Stationery & Collaterals",
+        title: "Stationery Design",
         desc: `Business Card
 Letterhead
 Envelope Design
@@ -409,9 +527,8 @@ Folder Design`,
     terms: TERMS_50,
     phases: [
       {
-        title: "Brand Strategy & Logo Redesign",
-        desc: `Brand Audit
-Logo Redesign
+        title: "Logo Redesign & Visual Identity",
+        desc: `Logo Redesign
 Visual Identity Update
 1- Color Palette
 2- Typography`,
@@ -419,11 +536,12 @@ Visual Identity Update
       },
       {
         title: "Collaterals Update",
-        desc: `Updated Packaging / Stationery as per brand scope`,
+        desc: `Updated Packaging / Stationery as per agreed scope`,
         timeline: "14",
       },
     ],
   },
+
 };
 
 export default function NewQuotationPage() {
@@ -438,7 +556,7 @@ export default function NewQuotationPage() {
   const [terms, setTerms] = useState(TERMS_100);
   const [includeBankInfo, setIncludeBankInfo] = useState(false);
   const [phases, setPhases] = useState<Phase[]>([
-    { title: "Branding Design", desc: `Logo Design\nVisual Identity\n1- Color Palette\n2- Font Selection`, timeline: "7" },
+    { title: "Logo Design & Visual Identity", desc: VI, timeline: "14" },
   ]);
 
   function applySectorTemplate(key: string) {
@@ -448,7 +566,7 @@ export default function NewQuotationPage() {
     setTotal(t.total);
     setCurrency(t.currency);
     setTerms(t.terms);
-    setPhases(t.phases.map(p => ({ ...p })));
+    setPhases(t.phases.map((p) => ({ ...p })));
   }
 
   const addPhase = () => setPhases([...phases, { title: "", desc: "", timeline: "" }]);
@@ -501,22 +619,28 @@ export default function NewQuotationPage() {
         >
           <option value="">— Select a sector to auto-fill —</option>
           <optgroup label="Food & Beverage">
-            <option value="coffee-shop">Coffee Shop Branding</option>
-            <option value="cafe-resto">Cafe & Restaurant Branding</option>
-            <option value="bakery">Bakery / Sweet Shop Branding</option>
-            <option value="sweet-brand">Sweet / Candy Brand</option>
+            <option value="coffee-shop">Coffee Shop</option>
+            <option value="cafe-resto">Cafe & Restaurant</option>
+            <option value="bakery">Bakery</option>
+            <option value="burger-restaurant">Burger Restaurant</option>
+            <option value="sweet-candy">Sweet / Candy Brand</option>
+            <option value="catering">Catering Brand</option>
           </optgroup>
           <optgroup label="Fashion & Lifestyle">
             <option value="clothing-brand">Clothing Brand</option>
-            <option value="abaya-brand">Abaya / Fashion Brand</option>
+            <option value="abaya-brand">Abaya / Modest Fashion</option>
             <option value="jewelry-brand">Jewelry Brand</option>
+            <option value="perfume-brand">Perfume / Fragrance Brand</option>
             <option value="eyewear-brand">Eyewear Brand</option>
-            <option value="perfume-brand">Perfume Brand</option>
+            <option value="salon-beauty">Salon / Beauty Brand</option>
+            <option value="flowers-brand">Flowers / Gift Brand</option>
+            <option value="sports-brand">Sports / Activewear Brand</option>
           </optgroup>
-          <optgroup label="Business & Corporate">
-            <option value="real-estate">Real Estate / Corporate Branding</option>
-            <option value="clinic-medical">Clinic / Medical Branding</option>
-            <option value="social-media">Social Media Management</option>
+          <optgroup label="Business & Services">
+            <option value="real-estate">Real Estate / Corporate</option>
+            <option value="clinic-medical">Clinic / Medical</option>
+            <option value="laundry-tailor">Laundry / Tailoring</option>
+            <option value="car-services">Car Services / Auto</option>
           </optgroup>
           <optgroup label="Branding Packages">
             <option value="basic-branding">Basic Branding Package</option>
@@ -553,9 +677,9 @@ export default function NewQuotationPage() {
               <button onClick={() => removePhase(i)} className="absolute top-3 right-3 w-6 h-6 rounded-full bg-gray-100 text-xs text-gray-500 hover:bg-red-100 hover:text-red-500">✕</button>
             )}
             <label className="block text-xs text-gray-500 mb-1">Phase {i + 1} Title</label>
-            <input placeholder="Phase title" className={`${inputCls} mb-3`} value={phase.title} onChange={(e) => updatePhase(i, "title", e.target.value)} />
+            <input className={`${inputCls} mb-3`} value={phase.title} onChange={(e) => updatePhase(i, "title", e.target.value)} />
             <label className="block text-xs text-gray-500 mb-1">Deliverables</label>
-            <textarea rows={5} className={`${inputCls} resize-none mb-3`} value={phase.desc} onChange={(e) => updatePhase(i, "desc", e.target.value)} />
+            <textarea rows={6} className={`${inputCls} resize-none mb-3`} value={phase.desc} onChange={(e) => updatePhase(i, "desc", e.target.value)} />
             <label className="block text-xs text-gray-500 mb-1">Timeline (Days)</label>
             <input type="number" min={1} className={inputCls} value={phase.timeline} onChange={(e) => updatePhase(i, "timeline", e.target.value)} />
           </div>
@@ -592,7 +716,6 @@ export default function NewQuotationPage() {
         </label>
       </div>
 
-      {/* ACTIONS */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t p-4">
         <button onClick={createQuotation} className="w-full bg-black text-white rounded-full py-4 text-sm font-medium">
           Create Quotation
