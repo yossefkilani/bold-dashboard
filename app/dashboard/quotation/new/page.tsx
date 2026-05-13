@@ -17,11 +17,20 @@ type Template = {
   phases: Phase[];
 };
 
-const TERMS_100 = `100% Advance Payment
-Any additional required direct or indirect jobs will be subject to a specified quotation shared with you at the time of request.`;
+const TERMS_AR = `يُشترط دفع 100٪ من قيمة العمل مقدمًا قبل بدء التنفيذ.
+الأيام المذكورة أعلاه تُحتسب ضمن أيام العمل الرسمية للشركة، ولا يُحتسب يوم الجمعة والسبت ضمن مدة التنفيذ.
+أي طلبات إضافية من العميل يتم تقديمها في عرض سعر مستقل وتُحتسب خارج نطاق الاتفاق الأساسي.
+المدة الزمنية الموضحة أعلاه تُعد تقديرية، وقد تخضع للتغيير بحسب التعديلات المطلوبة أو ظروف المشروع، وذلك باتفاق الطرفين.
+في حال رغب العميل في التوقف المؤقت عن المشروع أو لم يستجب لمحاولات التواصل، يحق له التوقف لمدة أقصاها شهران، وبعد هذه المدة يُعتبر المشروع ملغى تلقائيًا وغير قابل للاسترداد المالي.`;
 
-const TERMS_50 = `50% advance payment and 50% on completion.
-Any additional required direct or indirect jobs will be subject to a specified quotation shared with you at the time of request.`;
+const TERMS_EN = `Full payment of 100% is required in advance before work begins.
+The timelines mentioned above are calculated in official working days; Fridays and Saturdays are not counted as working days.
+Any additional requests by the client will be presented in a separate quotation and are considered outside the scope of the original agreement.
+The timelines indicated above are estimates and may be subject to change based on requested revisions or project circumstances, by mutual agreement.
+Should the client wish to pause the project or becomes unresponsive to communication, a pause of up to two months is permitted. After this period, the project will be considered automatically cancelled with no financial refund.`;
+
+const TERMS_100 = TERMS_AR;
+const TERMS_50 = TERMS_AR;
 
 const VI = `Logo Design
 Visual Identity
@@ -553,8 +562,15 @@ export default function NewQuotationPage() {
   const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
   const [currency, setCurrency] = useState("KWD");
   const [total, setTotal] = useState("");
-  const [terms, setTerms] = useState(TERMS_100);
+  const [termsLang, setTermsLang] = useState<"ar" | "en">("ar");
+  const [terms, setTerms] = useState(TERMS_AR);
   const [includeBankInfo, setIncludeBankInfo] = useState(false);
+
+  function toggleTermsLang() {
+    const next = termsLang === "ar" ? "en" : "ar";
+    setTermsLang(next);
+    setTerms(next === "ar" ? TERMS_AR : TERMS_EN);
+  }
   const [phases, setPhases] = useState<Phase[]>([
     { title: "Logo Design & Visual Identity", desc: VI, timeline: "14" },
   ]);
@@ -689,8 +705,28 @@ export default function NewQuotationPage() {
 
       {/* PAYMENT TERMS */}
       <div className="bg-white border rounded-xl p-4 mb-5">
-        <label className="block text-xs text-gray-500 mb-2 font-medium uppercase tracking-wide">Payment Terms</label>
-        <textarea rows={4} className={`${inputCls} resize-none`} value={terms} onChange={(e) => setTerms(e.target.value)} />
+        <div className="flex items-center justify-between mb-3">
+          <label className="text-xs text-gray-500 font-medium uppercase tracking-wide">
+            {termsLang === "ar" ? "الشروط والأحكام" : "Payment Terms"}
+          </label>
+          <button
+            type="button"
+            onClick={toggleTermsLang}
+            className="flex items-center gap-1.5 text-xs border rounded-full px-3 py-1 hover:bg-gray-50 transition"
+          >
+            <span className={termsLang === "ar" ? "font-bold" : "text-gray-400"}>AR</span>
+            <span className="text-gray-300">|</span>
+            <span className={termsLang === "en" ? "font-bold" : "text-gray-400"}>EN</span>
+          </button>
+        </div>
+        <textarea
+          rows={7}
+          dir={termsLang === "ar" ? "rtl" : "ltr"}
+          className={`${inputCls} resize-none`}
+          style={{ fontFamily: termsLang === "ar" ? "Arial, sans-serif" : "inherit" }}
+          value={terms}
+          onChange={(e) => setTerms(e.target.value)}
+        />
       </div>
 
       {/* TOTAL */}
