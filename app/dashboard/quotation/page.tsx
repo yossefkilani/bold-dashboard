@@ -60,7 +60,7 @@ export default function QuotationPage() {
   function openPreview(q: Quotation) {
     let phases: any[] = [];
     try { phases = JSON.parse(q.phases || "[]"); } catch {}
-    const params = new URLSearchParams({
+    sessionStorage.setItem("bold_quotation", JSON.stringify({
       client: q.client,
       project: q.project,
       date: q.date || "",
@@ -68,9 +68,9 @@ export default function QuotationPage() {
       currency: q.currency,
       terms: q.terms,
       bank: q.bank ? "1" : "0",
-      phases: JSON.stringify(phases),
-    });
-    window.open(`/quotation-static/template.html?${params}`, "_blank");
+      phases,
+    }));
+    window.open(`/quotation-static/template.html`, "_blank");
   }
 
   function fmt(v: string) {

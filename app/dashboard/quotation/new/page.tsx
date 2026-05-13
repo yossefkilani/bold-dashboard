@@ -650,13 +650,14 @@ export default function NewQuotationPage() {
 
       if (!res.ok) { alert("Failed to create quotation"); return; }
 
-      const params = new URLSearchParams({
+      // Store in sessionStorage to avoid URL length limits (especially with Arabic text)
+      sessionStorage.setItem("bold_quotation", JSON.stringify({
         client, project, date, total, currency, terms,
         bank: includeBankInfo ? "1" : "0",
-        phases: JSON.stringify(phasesForPDF),
-      });
+        phases: phasesForPDF,
+      }));
 
-      window.open(`/quotation-static/template.html?${params.toString()}`, "_blank");
+      window.open(`/quotation-static/template.html`, "_blank");
       router.push("/dashboard/quotation");
     } catch {
       alert("Server not reachable");
