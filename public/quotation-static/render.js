@@ -79,8 +79,8 @@ function createPage(pagePhases, pageIndex, isLast) {
         <h1 class="quotation-title">QUOTATION</h1>
         <div class="meta-row">
           <div class="meta-left">
-            <div><strong>Client:</strong> ${client}</div>
-            <div><strong>Project:</strong> ${project}</div>
+            ${client  ? `<div><strong>Client:</strong> ${client}</div>`  : ""}
+            ${project ? `<div><strong>Project:</strong> ${project}</div>` : ""}
             <div><strong>Date:</strong> ${formatDate(rawDate)}</div>
           </div>
           <div class="meta-right">
