@@ -636,6 +636,12 @@ export default function NewQuotationPage() {
 
   async function createQuotation() {
     try {
+      const phasesForPDF = phases.map(p => ({
+        title: p.title,
+        desc: itemsToDesc(p.items),
+        timeline: p.timeline,
+      }));
+
       const res = await fetch("/api/quotation", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -643,12 +649,6 @@ export default function NewQuotationPage() {
       });
 
       if (!res.ok) { alert("Failed to create quotation"); return; }
-
-      const phasesForPDF = phases.map(p => ({
-        title: p.title,
-        desc: itemsToDesc(p.items),
-        timeline: p.timeline,
-      }));
 
       const params = new URLSearchParams({
         client, project, date, total, currency, terms,
