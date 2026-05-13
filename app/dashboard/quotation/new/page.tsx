@@ -3,9 +3,14 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+type Deliverable = {
+  text: string;
+  checked: boolean;
+};
+
 type Phase = {
   title: string;
-  desc: string;
+  items: Deliverable[];
   timeline: string;
 };
 
@@ -36,6 +41,14 @@ const VI = `Logo Design
 Visual Identity
 1- Color Palette
 2- Typography`;
+
+function toItems(desc: string): Deliverable[] {
+  return desc.split("\n").filter(l => l.trim()).map(text => ({ text: text.trim(), checked: true }));
+}
+
+function itemsToDesc(items: Deliverable[]): string {
+  return items.filter(i => i.checked).map(i => i.text).join("\n");
+}
 
 const SECTOR_TEMPLATES: Record<string, Template> = {
 
@@ -572,7 +585,7 @@ export default function NewQuotationPage() {
     setTerms(next === "ar" ? TERMS_AR : TERMS_EN);
   }
   const [phases, setPhases] = useState<Phase[]>([
-    { title: "Logo Design & Visual Identity", desc: VI, timeline: "14" },
+    { title: "Logo Design & Visual Identity", items: toItems(VI), timeline: "14" },
   ]);
 
   function applySectorTemplate(key: string) {
@@ -581,32 +594,60 @@ export default function NewQuotationPage() {
     const t = SECTOR_TEMPLATES[key];
     setTotal(t.total);
     setCurrency(t.currency);
-    setTerms(t.terms);
-    setPhases(t.phases.map((p) => ({ ...p })));
+    // terms stay fixed — controlled only by AR/EN toggle
+    setPhases(t.phases.map(p => ({ title: p.title, items: toItems(p.desc), timeline: p.timeline })));
   }
 
-  const addPhase = () => setPhases([...phases, { title: "", desc: "", timeline: "" }]);
+  const addPhase = () => setPhases([...phases, { title: "", items: [], timeline: "" }]);
   const removePhase = (i: number) => setPhases(phases.filter((_, x) => x !== i));
-  const updatePhase = (i: number, field: keyof Phase, value: string) => {
+
+  function updatePhaseTitle(i: number, val: string) {
+    const copy = [...phases]; copy[i].title = val; setPhases(copy);
+  }
+  function updatePhaseTimeline(i: number, val: string) {
+    const copy = [...phases]; copy[i].timeline = val; setPhases(copy);
+  }
+  function toggleItem(pi: number, di: number) {
     const copy = [...phases];
-    copy[i][field] = value;
+    copy[pi].items[di].checked = !copy[pi].items[di].checked;
     setPhases(copy);
-  };
+  }
+  function toggleAllItems(pi: number, checked: boolean) {
+    const copy = [...phases];
+    copy[pi].items = copy[pi].items.map(item => ({ ...item, checked }));
+    setPhases(copy);
+  }
+  function addItem(pi: number) {
+    const copy = [...phases];
+    copy[pi].items.push({ text: "", checked: true });
+    setPhases(copy);
+  }
+  function updateItemText(pi: number, di: number, val: string) {
+    const copy = [...phases];
+    copy[pi].items[di].text = val;
+    setPhases(copy);
+  }
 
   async function createQuotation() {
     try {
       const res = await fetch("/api/quotation", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ client, project, date, total, currency, terms, bank: includeBankInfo, phases: JSON.stringify(phases) }),
+        body: JSON.stringify({ client, project, date, total, currency, terms, bank: includeBankInfo, phases: JSON.stringify(phasesForPDF) }),
       });
 
       if (!res.ok) { alert("Failed to create quotation"); return; }
 
+      const phasesForPDF = phases.map(p => ({
+        title: p.title,
+        desc: itemsToDesc(p.items),
+        timeline: p.timeline,
+      }));
+
       const params = new URLSearchParams({
         client, project, date, total, currency, terms,
         bank: includeBankInfo ? "1" : "0",
-        phases: JSON.stringify(phases),
+        phases: JSON.stringify(phasesForPDF),
       });
 
       window.open(`/quotation-static/template.html?${params.toString()}`, "_blank");
@@ -687,19 +728,60 @@ export default function NewQuotationPage() {
 
       {/* PHASES */}
       <div className="space-y-4 mb-5">
-        {phases.map((phase, i) => (
-          <div key={i} className="bg-white border rounded-xl p-4 relative">
-            {phases.length > 1 && (
-              <button onClick={() => removePhase(i)} className="absolute top-3 right-3 w-6 h-6 rounded-full bg-gray-100 text-xs text-gray-500 hover:bg-red-100 hover:text-red-500">✕</button>
-            )}
-            <label className="block text-xs text-gray-500 mb-1">Phase {i + 1} Title</label>
-            <input className={`${inputCls} mb-3`} value={phase.title} onChange={(e) => updatePhase(i, "title", e.target.value)} />
-            <label className="block text-xs text-gray-500 mb-1">Deliverables</label>
-            <textarea rows={6} className={`${inputCls} resize-none mb-3`} value={phase.desc} onChange={(e) => updatePhase(i, "desc", e.target.value)} />
-            <label className="block text-xs text-gray-500 mb-1">Timeline (Days)</label>
-            <input type="number" min={1} className={inputCls} value={phase.timeline} onChange={(e) => updatePhase(i, "timeline", e.target.value)} />
-          </div>
-        ))}
+        {phases.map((phase, i) => {
+          const allChecked = phase.items.every(x => x.checked);
+          const someChecked = phase.items.some(x => x.checked);
+          return (
+            <div key={i} className="bg-white border rounded-xl p-4 relative">
+              {phases.length > 1 && (
+                <button onClick={() => removePhase(i)} className="absolute top-3 right-3 w-6 h-6 rounded-full bg-gray-100 text-xs text-gray-500 hover:bg-red-100 hover:text-red-500">✕</button>
+              )}
+
+              <label className="block text-xs text-gray-500 mb-1">Phase {i + 1} Title</label>
+              <input className={`${inputCls} mb-4`} value={phase.title} onChange={(e) => updatePhaseTitle(i, e.target.value)} />
+
+              <div className="flex items-center justify-between mb-2">
+                <label className="text-xs text-gray-500">Deliverables</label>
+                <button
+                  type="button"
+                  onClick={() => toggleAllItems(i, !allChecked)}
+                  className="text-xs text-gray-400 hover:text-black"
+                >
+                  {allChecked ? "Deselect all" : "Select all"}
+                </button>
+              </div>
+
+              <div className="border rounded-xl overflow-hidden mb-4">
+                {phase.items.map((item, di) => (
+                  <label key={di} className={`flex items-center gap-3 px-4 py-2.5 cursor-pointer hover:bg-gray-50 ${di > 0 ? "border-t" : ""}`}>
+                    <input
+                      type="checkbox"
+                      checked={item.checked}
+                      onChange={() => toggleItem(i, di)}
+                      className="w-4 h-4 rounded accent-black"
+                    />
+                    <input
+                      type="text"
+                      value={item.text}
+                      onChange={(e) => updateItemText(i, di, e.target.value)}
+                      className={`flex-1 text-sm bg-transparent outline-none ${!item.checked ? "line-through text-gray-300" : ""}`}
+                    />
+                  </label>
+                ))}
+                <button
+                  type="button"
+                  onClick={() => addItem(i)}
+                  className="w-full text-xs text-gray-400 hover:text-black py-2.5 border-t text-center"
+                >
+                  + Add item
+                </button>
+              </div>
+
+              <label className="block text-xs text-gray-500 mb-1">Timeline (Days)</label>
+              <input type="number" min={1} className={inputCls} value={phase.timeline} onChange={(e) => updatePhaseTimeline(i, e.target.value)} />
+            </div>
+          );
+        })}
         <button onClick={addPhase} className="w-full border rounded-xl py-3 text-sm hover:bg-gray-50">+ Add Phase</button>
       </div>
 
