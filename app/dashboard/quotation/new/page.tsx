@@ -14,12 +14,18 @@ type Phase = {
   timeline: string;
 };
 
+type TemplatePhase = {
+  title: string;
+  desc: string;
+  timeline: string;
+};
+
 type Template = {
   label: string;
   total: string;
   currency: string;
   terms: string;
-  phases: Phase[];
+  phases: TemplatePhase[];
 };
 
 const TERMS_AR = `يُشترط دفع 100٪ من قيمة العمل مقدمًا قبل بدء التنفيذ.
