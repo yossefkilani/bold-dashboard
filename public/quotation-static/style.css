@@ -234,26 +234,26 @@ body {
 ====================== */
 
 .footer {
-  font-size: 7.5pt;
-  line-height: 1.9;
+  font-size: 6.5pt;
+  line-height: 1.45;
   color: #333;
-  margin-top: 6mm;
+  margin-top: 5mm;
 }
 
 .footer-ar {
   font-family: "HelveticaAr", Arial, sans-serif;
-  font-size: 7.5pt;
-  line-height: 2;
+  font-size: 6.5pt;
+  line-height: 1.45;
   direction: rtl;
   text-align: right;
   color: #333;
-  margin-top: 6mm;
+  margin-top: 5mm;
 }
 
 .footer-title {
   font-weight: 700;
-  font-size: 8.5pt;
-  margin-bottom: 3mm;
+  font-size: 7pt;
+  margin-bottom: 2mm;
   display: block;
 }
 
@@ -266,8 +266,8 @@ body {
 
 .terms-list li {
   counter-increment: terms-counter;
-  margin-bottom: 2mm;
-  padding-right: 5mm;
+  margin-bottom: 1.2mm;
+  padding-right: 6mm;
   position: relative;
 }
 
@@ -275,17 +275,17 @@ body {
   content: counter(terms-counter) ".";
   position: absolute;
   right: 0;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .terms-list-en {
   margin: 0;
-  padding-left: 14px;
+  padding-left: 12px;
   list-style: decimal;
 }
 
 .terms-list-en li {
-  margin-bottom: 2mm;
+  margin-bottom: 1.2mm;
 }
 
 /* ======================

@@ -108,13 +108,9 @@ function createPage(pagePhases, pageIndex, isLast) {
     row.className = "table-row";
     const days = Number(p.timeline);
 
-    // Build numbered list from desc lines
+    // Build plain list from desc lines (no numbering)
     const lines = (p.desc || "").split("\n").map(l => l.trim()).filter(Boolean);
-    const listItems = lines.map((line, idx) => {
-      // Strip existing leading number prefix (e.g. "1-", "1.", "1)")
-      const clean = line.replace(/^[\d]+\s*[-.)]\s*/, "");
-      return `<li><span style="margin-right:5px;font-weight:600">${idx + 1}.</span>${clean}</li>`;
-    }).join("");
+    const listItems = lines.map(line => `<li>${line}</li>`).join("");
 
     row.innerHTML = `
       <div class="phase-scope">${p.title || ""}</div>
